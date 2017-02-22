@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Shots") || other.CompareTag("Player"))
+		if(other.CompareTag("Shot") || other.CompareTag("Player"))
 		{
 			Die();
 		}
