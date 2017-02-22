@@ -7,18 +7,21 @@ public class WaveSpawner : MonoBehaviour {
 	public Vector3 SpawnRange;
 	public int EnemyCount;
 	public float TimeBetweenEnemySpawn;
-	public float TimeBetweenFirstWave;
+	public float TimeBeforeFirstWave;
 	public float TimeBetweenWaves;
 	public bool SpawnEnabled;
 
+	public BonusManager Bonuses;
+
 	void Start()
 	{
+		Bonuses.Notify();
 		StartCoroutine(SpawnWaves());
 	}
 
 	IEnumerator SpawnWaves()
 	{
-		yield return new WaitForSeconds(TimeBetweenFirstWave);
+		yield return new WaitForSeconds(TimeBeforeFirstWave);
 
 		while (true)
 		{
@@ -33,6 +36,11 @@ public class WaveSpawner : MonoBehaviour {
 
 						GameObject enemy = Instantiate(Enemy);
 						enemy.transform.position = spawnPosition;
+
+						if(Bonuses.HasToPopABonus())
+						{
+							enemy.GetComponent<EnemyScript>().BonusCarried = Bonuses.GetNextBonus();
+						}
 
 						yield return new WaitForSeconds(TimeBetweenEnemySpawn);
 					}
