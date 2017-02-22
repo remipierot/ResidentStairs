@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour {
 	public float Speed = 1.0f;
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
+	public GameObject BonusCarried;
 
 	// Use this for initialization
 	void Start ()
@@ -39,6 +40,11 @@ public class EnemyScript : MonoBehaviour {
 		GetComponent<MeshRenderer>().material = dying;
 		_Collider0.enabled = false;
 		_Collider1.enabled = false;
+
+		if(BonusCarried != null)
+		{
+			Instantiate(BonusCarried, transform.position, Quaternion.identity);
+		}
 
 		KillScript.enabled = true;
 		KillScript.SetMaterial(dying);
