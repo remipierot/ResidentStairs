@@ -14,19 +14,23 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed;
     [SerializeField] private float tiltFactor;
     [SerializeField] private Rigidbody rigidbody;
-    [SerializeField] GameObject shot;
-    [SerializeField] Transform shotSpawnDroite;
-    [SerializeField] Transform shotSpawnCentre;
-    [SerializeField] Transform shotSpawnGauche;
-
+    [SerializeField] private GameObject shot;
+    [SerializeField] private Transform shotSpawnDroite;
+    [SerializeField] private Transform shotSpawnCentre;
+    [SerializeField] private Transform shotSpawnGauche;
+    [SerializeField] private Transform shotSpawnSat1;
+    [SerializeField] private Transform shotSpawnSat2;
 
     [SerializeField] private float numberOfShots;
     [SerializeField] private float numberOfSatelittes;
 
     public Boundary boundary;
-    public MeshRenderer cannonDroite_renderer;
-    public MeshRenderer cannonCentre_renderer;
-    public MeshRenderer cannonGauche_renderer;
+    [SerializeField] private  MeshRenderer cannonDroite_renderer;
+    [SerializeField] private  MeshRenderer cannonCentre_renderer;
+    [SerializeField] private  MeshRenderer cannonGauche_renderer;
+    [SerializeField] private  MeshRenderer Sat1_renderer;
+    [SerializeField] private  MeshRenderer Sat2_renderer;
+
 
     private float nextFire = 0.0f;
     [SerializeField] private float fireRate;
@@ -73,6 +77,23 @@ public class PlayerController : MonoBehaviour {
             cannonCentre_renderer.enabled = true;
             cannonGauche_renderer.enabled = true;
         }
+
+        if(numberOfSatelittes == 0)
+        {
+            Sat1_renderer.enabled = false;
+            Sat2_renderer.enabled = false;
+        }
+        else if(numberOfSatelittes == 1)
+        {
+            Sat1_renderer.enabled = true;
+            Sat2_renderer.enabled = false;
+        }
+        else if(numberOfSatelittes == 2)
+        {
+            Sat1_renderer.enabled = true;
+            Sat2_renderer.enabled = true;       
+        }
+
     }
 
     private void Update()
@@ -85,18 +106,28 @@ public class PlayerController : MonoBehaviour {
             nextFire = Time.time + fireRate;
             if (numberOfShots == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnCentre.position, shotSpawnCentre.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
             }
             else if (numberOfShots == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, shotSpawnDroite.rotation) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, shotSpawnGauche.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
             }
             else if (numberOfShots == 3)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, shotSpawnDroite.rotation) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, shotSpawnCentre.rotation) as GameObject;
-                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, shotSpawnGauche.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
+                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
+            }
+
+            if(numberOfSatelittes == 1)
+            {
+                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.identity) as GameObject;
+            }
+            else if(numberOfSatelittes == 2)
+            {
+                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.identity) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnSat2.position, Quaternion.identity) as GameObject;
             }
         }
     }
