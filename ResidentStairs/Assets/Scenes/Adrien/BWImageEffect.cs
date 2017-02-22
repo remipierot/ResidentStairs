@@ -7,9 +7,10 @@ public class BWImageEffect : MonoBehaviour {
 
     [Range (0, 1)]
     public float ramp;
-    [Range(0, 1)]
-    public float invert;
+
     private Material material;
+
+    public bool black = false;
 
     // Creates a private material used to the effect
     void Awake()
@@ -21,7 +22,10 @@ public class BWImageEffect : MonoBehaviour {
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         material.SetFloat("_Ramp", ramp);
-        material.SetFloat("_Invert", invert);
+
+        if(black) material.SetFloat("_Invert", 0.0f);
+        else material.SetFloat("_Invert", 1.0f);
+
         Graphics.Blit(source, destination, material);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Boundary
 {
-    public float xMin, xMax, zMin, zMax;
+    public float yMin, yMax, zMin, zMax;
 
 }
 
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
     }
 
 
@@ -80,18 +79,18 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveVertical, 0.0f, moveHorizontal);
+        Vector3 movement = new Vector3(0.0f, moveVertical, moveHorizontal);
 
         rigidbody.velocity = movement * speed;
 
         rigidbody.position = new Vector3
         (
-            Mathf.Clamp(rigidbody.position.x, boundary.xMin, boundary.xMax),
             0.0f,
+            Mathf.Clamp(rigidbody.position.y, boundary.yMin, boundary.yMax),
             Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
         );
-
-        rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidbody.velocity.x *(-tiltFactor));
+        
+        rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, 90+rigidbody.velocity.y *(-tiltFactor));
 
 
         /**********************************************
@@ -156,28 +155,28 @@ public class PlayerController : MonoBehaviour {
             nextFire = Time.time + fireRate;
             if (numberOfShots == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f,0.0f,90.0f)) as GameObject;
             }
             else if (numberOfShots == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
             }
             else if (numberOfShots == 3)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
-                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
             }
 
             if(numberOfSatelittes == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.identity) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
             }
             else if(numberOfSatelittes == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.identity) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnSat2.position, Quaternion.identity) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnSat2.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
             }
         }
     }
