@@ -15,7 +15,7 @@ public class EnemyScript : MonoBehaviour {
 
 	private void Update()
 	{
-		_Body.AddForce(transform.forward * Speed);
+		_Body.AddForce(-transform.up * Speed);
 	}
 
 	void OnTriggerEnter(Collider other)
