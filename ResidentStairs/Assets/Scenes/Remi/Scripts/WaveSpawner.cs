@@ -13,6 +13,14 @@ public class WaveSpawner : MonoBehaviour {
 
 	public BonusManager Bonuses;
 
+	public enum WaveType
+	{
+		SINUS,
+		ROWS,
+		PLUS,
+		ARC
+	}
+
 	void Start()
 	{
 		Bonuses.Notify();
@@ -31,7 +39,26 @@ public class WaveSpawner : MonoBehaviour {
 				{
 					if(SpawnEnabled)
 					{
-						Vector2 p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
+						float r = Random.Range(0.0f, 1.0f) * 4.0f;
+						Vector2 p = Vector2.zero;
+
+						if(r <= 1.0f)
+						{
+							p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
+						}
+						else if(r <= 2.0f)
+						{
+
+						}
+						else if(r <= 3.0f)
+						{
+
+						}
+						else if(r <= 4.0f)
+						{
+
+						}
+
 						Vector3 spawnPosition = new Vector3(SpawnRange.x, 3.5f * p.y, SpawnRange.z);
 
 						GameObject enemy = Instantiate(Enemy);

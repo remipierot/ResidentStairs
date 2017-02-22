@@ -11,6 +11,7 @@ public class EnemyScript : MonoBehaviour {
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
 	public GameObject BonusCarried;
+	public bool IsBlack = false;
 
 	// Use this for initialization
 	void Start ()
