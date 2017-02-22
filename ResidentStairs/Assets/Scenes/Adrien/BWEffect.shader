@@ -1,8 +1,8 @@
 Shader "Hidden/BWEffect" {
 Properties {
 	_MainTex ("Base (RGB)", 2D) = "white" {}
-	_Color("Color", Color) = (0, 0, 0, 1)
-	_bwBlend("Black & White blend", Range(0, 1)) = 0
+	_Ramp("Ramp", Range(0, 1)) = 0
+	_Invert("Invert", Range(0,1)) = 0
 }
 
 SubShader {
@@ -13,8 +13,8 @@ SubShader {
 		#include "UnityCG.cginc"
 
 		uniform sampler2D _MainTex; 
-		uniform float _bwBlend;
-		uniform float4 _Color;
+		float _Ramp;
+		float _Invert;
 
 		float4 frag (v2f_img i) : COLOR
 		{
@@ -23,10 +23,17 @@ SubShader {
 			float3 nb = float3(lum, lum, lum);
 
 			float4 result = col;
-			result.rgb = lerp(col.rgb, nb, _bwBlend);
-			result.r *= _Color.r;
-			result.g *= _Color.g;
-			result.b *= _Color.b;
+			result.rgb = lerp(col.rgb, nb, _Ramp);
+
+			if (_Invert < 0.5f) {
+				if (result.r <= 0.3f) result.rgb = 0.0f;
+				else result.rgb = 1.0f;
+			}
+			else {
+				if (result.r >= 0.3f) result.rgb = 0.0f;
+				else result.rgb = 1.0f;
+			}
+
 			return result;
 		}
 		ENDCG
