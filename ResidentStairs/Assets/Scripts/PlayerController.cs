@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Boundary
@@ -21,8 +22,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform shotSpawnSat1;
     [SerializeField] private Transform shotSpawnSat2;
 
-    [SerializeField] private float numberOfShots;
-    [SerializeField] private float numberOfSatelittes;
+    [SerializeField] private Material myMat;
+
+
+    [SerializeField] private int numberOfShots;
+    [SerializeField] private int numberOfSatelittes;
+    [SerializeField] private int numberOfBombs;
     [SerializeField] private bool barrierActive;
 
     public Boundary boundary;
@@ -32,12 +37,22 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject sat1_renderer;
     [SerializeField] private GameObject sat2_renderer;
     [SerializeField] private GameObject barrier_renderer;
+    [SerializeField] private GameObject bombHaut;
+    [SerializeField] private GameObject bombCentre;
+    [SerializeField] private GameObject bombBas;
+
+    [SerializeField] private Text bombNumberText;
+
 
     private float nextFire = 0.0f;
     [SerializeField] private float fireRate;
 
+    private float nextBomb = 0.0f;
+    [SerializeField] private float bombRate;
+
     // Use this for initialization
     void Start () {
+        myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
     }
 
 
@@ -51,10 +66,18 @@ public class PlayerController : MonoBehaviour {
                     if (numberOfShots < 3) numberOfShots++;
                     break;
                 case "Shield":
-                    if (!barrierActive) barrierActive = true;
+                    if (!barrierActive)
+                    {
+                        barrierActive = true;
+                        myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                    }
+
                     break;
                 case "Satellite":
                     if (numberOfSatelittes < 3) numberOfSatelittes++;
+                    break;
+                case "Bomb":
+                    if (numberOfBombs < 3) numberOfBombs++;
                     break;
                 default:
                     break;
@@ -63,7 +86,11 @@ public class PlayerController : MonoBehaviour {
         }
         else if(other.tag == "Enemy")
         {
-            if (barrierActive) barrierActive = false;
+            if (barrierActive)
+            {
+                barrierActive = false;
+                myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
+            }
             else Mort();
         }
     }
@@ -136,7 +163,32 @@ public class PlayerController : MonoBehaviour {
         if (barrierActive) barrier_renderer.SetActive(true);
         else barrier_renderer.SetActive(false);
 
-        
+
+        if (numberOfBombs == 0)
+        {
+            bombHaut.SetActive(false);
+            bombCentre.SetActive(false);
+            bombBas.SetActive(false);
+        }
+        else if (numberOfBombs == 1)
+        {
+            bombHaut.SetActive(false);
+            bombCentre.SetActive(true);
+            bombBas.SetActive(false);
+        }
+        else if (numberOfBombs == 2)
+        {
+            bombHaut.SetActive(true);
+            bombCentre.SetActive(false);
+            bombBas.SetActive(true);
+        }
+        else if (numberOfBombs == 3)
+        {
+            bombHaut.SetActive(true);
+            bombCentre.SetActive(true);
+            bombBas.SetActive(true);
+        }
+
     }
 
     /**********************************************
@@ -177,6 +229,17 @@ public class PlayerController : MonoBehaviour {
             {
                 GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
                 GameObject clone2 = Instantiate(shot, shotSpawnSat2.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+            }
+        }
+
+        if (numberOfBombs > 0)
+        {
+            if (Input.GetButton("Fire3") && Time.time > nextBomb)
+            {
+                nextBomb = Time.time + bombRate;
+
+                numberOfBombs--;
+                //DECLENCHEMENT DE LA BOMBE
             }
         }
     }
