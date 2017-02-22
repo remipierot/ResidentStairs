@@ -85,18 +85,18 @@ public class PlayerController : MonoBehaviour {
             nextFire = Time.time + fireRate;
             if (numberOfShots == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnCentre.position, shotSpawnCentre.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
             }
             else if (numberOfShots == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, shotSpawnDroite.rotation) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, shotSpawnGauche.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
             }
             else if (numberOfShots == 3)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, shotSpawnDroite.rotation) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, shotSpawnCentre.rotation) as GameObject;
-                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, shotSpawnGauche.rotation) as GameObject;
+                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.identity) as GameObject;
+                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, Quaternion.identity) as GameObject;
+                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, Quaternion.identity) as GameObject;
             }
         }
     }
