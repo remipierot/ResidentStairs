@@ -23,14 +23,15 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float numberOfShots;
     [SerializeField] private float numberOfSatelittes;
+    [SerializeField] private bool barrierActive;
 
     public Boundary boundary;
-    [SerializeField] private  MeshRenderer cannonDroite_renderer;
-    [SerializeField] private  MeshRenderer cannonCentre_renderer;
-    [SerializeField] private  MeshRenderer cannonGauche_renderer;
-    [SerializeField] private  MeshRenderer Sat1_renderer;
-    [SerializeField] private  MeshRenderer Sat2_renderer;
-
+    [SerializeField] private GameObject cannonDroite_renderer;
+    [SerializeField] private GameObject cannonCentre_renderer;
+    [SerializeField] private GameObject cannonGauche_renderer;
+    [SerializeField] private GameObject sat1_renderer;
+    [SerializeField] private GameObject sat2_renderer;
+    [SerializeField] private GameObject barrier_renderer;
 
     private float nextFire = 0.0f;
     [SerializeField] private float fireRate;
@@ -38,6 +39,39 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Bonus")
+        {
+            switch (other.name)
+            {
+                case "Weapon":
+                    if (numberOfShots < 3) numberOfShots++;
+                    break;
+                case "Shield":
+                    if (!barrierActive) barrierActive = true;
+                    break;
+                case "Satellite":
+                    if (numberOfSatelittes < 3) numberOfSatelittes++;
+                    break;
+                default:
+                    break;
+            }
+            other.gameObject.GetComponent<BonusBehaviour>().catchBonus();
+        }
+        else if(other.tag == "Enemy")
+        {
+            if (barrierActive) barrierActive = false;
+            else Mort();
+        }
+    }
+
+    void Mort()
+    {
+        Debug.Log("Mort");
     }
 
     void FixedUpdate()
@@ -57,44 +91,60 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(rigidbody.position.z, boundary.zMin, boundary.zMax)
         );
 
-        rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidbody.velocity.x *(-tiltFactor)); 
-            
-        if(numberOfShots == 1)
+        rigidbody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidbody.velocity.x *(-tiltFactor));
+
+
+        /**********************************************
+        **                                           **  
+        **  ACTIVATION/DESACTIVATION DES GAMEOBJECT  **
+        **                                           **  
+        ***********************************************/
+        if (numberOfShots == 1)
         {
-            cannonDroite_renderer.enabled = false;
-            cannonCentre_renderer.enabled = true;
-            cannonGauche_renderer.enabled = false;
+            cannonDroite_renderer.SetActive(false);
+            cannonCentre_renderer.SetActive(true);
+            cannonGauche_renderer.SetActive(false);
         }
         else if (numberOfShots == 2)
         {
-            cannonDroite_renderer.enabled = true;
-            cannonCentre_renderer.enabled = false;
-            cannonGauche_renderer.enabled = true;
+            cannonDroite_renderer.SetActive(true);
+            cannonCentre_renderer.SetActive(false);
+            cannonGauche_renderer.SetActive(true);
         }
         else if (numberOfShots == 3)
         {
-            cannonDroite_renderer.enabled = true;
-            cannonCentre_renderer.enabled = true;
-            cannonGauche_renderer.enabled = true;
+            cannonDroite_renderer.SetActive(true);
+            cannonCentre_renderer.SetActive(true);
+            cannonGauche_renderer.SetActive(true);
         }
 
-        if(numberOfSatelittes == 0)
+        if (numberOfSatelittes == 0)
         {
-            Sat1_renderer.enabled = false;
-            Sat2_renderer.enabled = false;
+            sat1_renderer.SetActive(false);
+            sat2_renderer.SetActive(false);
         }
-        else if(numberOfSatelittes == 1)
+        else if (numberOfSatelittes == 1)
         {
-            Sat1_renderer.enabled = true;
-            Sat2_renderer.enabled = false;
+            sat1_renderer.SetActive(true);
+            sat2_renderer.SetActive(false);
         }
-        else if(numberOfSatelittes == 2)
+        else if (numberOfSatelittes == 2)
         {
-            Sat1_renderer.enabled = true;
-            Sat2_renderer.enabled = true;       
+            sat1_renderer.SetActive(true);
+            sat2_renderer.SetActive(true);
         }
 
+        if (barrierActive) barrier_renderer.SetActive(true);
+        else barrier_renderer.SetActive(false);
+
+        
     }
+
+    /**********************************************
+    **                                           **  
+    **              GESTION DES TIRS             **
+    **                                           **  
+    ***********************************************/
 
     private void Update()
     {        
