@@ -13,7 +13,4 @@ public class Mover : MonoBehaviour {
 
         Destroy(gameObject, 2);
 	}
-
-    
-
 }
