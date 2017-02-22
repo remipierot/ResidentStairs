@@ -34,4 +34,14 @@ public class ParametricCurves {
 
 		return p;
 	}
+
+	public static Vector2 PatternQueen(float a, float b, float c, float d, float j, float k, float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = Mathf.Cos(a * t) - Mathf.Pow(Mathf.Cos(b * t), j);
+		p.y = Mathf.Sin(c * t) - Mathf.Pow(Mathf.Sin(d * t), k);
+
+		return p;
+	}
 }
