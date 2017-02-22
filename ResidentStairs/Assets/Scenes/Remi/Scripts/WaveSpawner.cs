@@ -29,7 +29,7 @@ public class WaveSpawner : MonoBehaviour {
 					if(SpawnEnabled)
 					{
 						Vector2 p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
-						Vector3 spawnPosition = new Vector3(SpawnRange.x, 3f * p.y, SpawnRange.z);
+						Vector3 spawnPosition = new Vector3(SpawnRange.x, 3.5f * p.y, SpawnRange.z);
 
 						GameObject enemy = Instantiate(Enemy);
 						enemy.transform.position = spawnPosition;
