@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject bombCentre;
     [SerializeField] private GameObject bombBas;
 
-    [SerializeField] private Text bombNumberText;
+    [SerializeField] private GameObject gameManager;
 
 
     private float nextFire = 0.0f;
@@ -62,21 +62,20 @@ public class PlayerController : MonoBehaviour {
         {
             switch (other.name)
             {
-                case "Weapon":
+                case "Weapon (Clone)":
                     if (numberOfShots < 3) numberOfShots++;
                     break;
-                case "Shield":
+                case "Shield (Clone)":
                     if (!barrierActive)
                     {
                         barrierActive = true;
                         myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                     }
-
                     break;
-                case "Satellite":
+                case "Satellite (Clone)":
                     if (numberOfSatelittes < 3) numberOfSatelittes++;
                     break;
-                case "Bomb":
+                case "Bomb (Clone)":
                     if (numberOfBombs < 3) numberOfBombs++;
                     break;
                 default:
@@ -91,13 +90,13 @@ public class PlayerController : MonoBehaviour {
                 barrierActive = false;
                 myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
             }
-            else Mort();
+            else Invoke("Mort", 3.0f);
         }
     }
 
     void Mort()
     {
-        Debug.Log("Mort");
+        gameManager.GetComponent<GameManagerBehavior>().ResetGame();
     }
 
     void FixedUpdate()

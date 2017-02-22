@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManagerBehavior : MonoBehaviour {
 
@@ -19,5 +21,11 @@ public class GameManagerBehavior : MonoBehaviour {
 
             cam.GetComponent<BWImageEffect>().black = !cam.GetComponent<BWImageEffect>().black;
         }      
+    }
+
+    public void ResetGame()
+    {
+        // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
+        SceneManager.LoadScene("FinalScene", LoadSceneMode.Single);
     }
 }
