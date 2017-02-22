@@ -6,9 +6,10 @@ using UnityEngine;
 public class BWImageEffect : MonoBehaviour {
 
     [Range (0, 1)]
-    public float intensity;
+    public float ramp;
+    [Range(0, 1)]
+    public float invert;
     private Material material;
-    public Color col;
 
     // Creates a private material used to the effect
     void Awake()
@@ -16,18 +17,11 @@ public class BWImageEffect : MonoBehaviour {
         material = new Material(Shader.Find("Hidden/BWEffect"));
     }
 
-    void Update()
-    {
-        col.r = (Mathf.Sin(0.3f * Time.fixedTime + 0) * 127 + 128)/256;
-        col.g = (Mathf.Sin(0.3f * Time.fixedTime + 2) * 127 + 128)/256;
-        col.b = (Mathf.Sin(0.3f * Time.fixedTime + 4) * 127 + 128)/256;
-    }
-
     // Postprocess the image
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        material.SetFloat("_bwBlend", intensity);
-        material.SetColor("_Color", col);
+        material.SetFloat("_Ramp", ramp);
+        material.SetFloat("_Invert", invert);
         Graphics.Blit(source, destination, material);
     }
 }

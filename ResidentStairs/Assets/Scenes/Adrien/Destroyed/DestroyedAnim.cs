@@ -3,33 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyedAnim : MonoBehaviour {
-
-    public Material m_material;
-    public ParticleSystem m_particleSystem;
+	private Material m_material;
+	public ParticleSystem m_particleSystem;
     
-    public bool state = false;
+	public bool state = false;
 
-    float disp = 0.0f;
-    float dispMax = 0.3f;
+	float disp = 0.0f;
+	float dispMax = 10.0f;
 
-	// Use this for initialization
-	void Start () {
+	public void SetMaterial(Material m)
+	{
+		m_material = m;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-        
-            if (!state) m_particleSystem.Emit(30);
-            disp += 0.1f * Time.fixedDeltaTime;
-            if (disp >= dispMax)
-            {
-                disp = 0.0f;
-                state = false;
-            }
-            else state = true;
+		if (!state)
+		{
+			m_particleSystem.Emit(30);
+		}
 
-            m_material.SetFloat("_Displacement", disp);
+		disp += 0.1f * Time.deltaTime;
+		if (disp >= dispMax)
+		{
+			disp = 0.0f;
+			state = false;
+			Destroy(gameObject);
+		}
+		else
+		{
+			state = true;
+		}
 
-
-    }
+		m_material.SetFloat("_Displacement", disp);
+	}
 }
