@@ -30,9 +30,10 @@
 				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
 				float3 norm = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
 				float3 offset = TransformViewToProjection(norm.xyz);
-				o.pos.xyz += _Displacement * offset.xyz;
-				return o;
 
+				o.pos.xyz += _Displacement * offset.xyz * 5.0f;
+
+				return o;
 			}
 
 			half4 frag(v2f i) : COLOR
