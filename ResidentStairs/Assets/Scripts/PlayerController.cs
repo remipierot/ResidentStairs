@@ -32,8 +32,10 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private Material myMat;
 
+    [SerializeField] private GameObject boss;
 
-    [SerializeField] private int numberOfShots;
+
+   [SerializeField] private int numberOfShots;
     [SerializeField] private int numberOfSatelittes;
     [SerializeField] private int numberOfBombs;
     [SerializeField] private bool barrierActive;
@@ -57,7 +59,7 @@ public class PlayerController : MonoBehaviour {
 
     private float nextBomb = 0.0f;
     [SerializeField] private float bombRate;
-
+    [SerializeField] private int bombDamage;
 
     // Use this for initialization
     void Start () {
@@ -265,6 +267,8 @@ public class PlayerController : MonoBehaviour {
                 {
                     enemy.GetComponent<EnemyScript>().Die();
                 }
+
+                boss.GetComponent<BossBehaviour>().takeHit(bombDamage);
             }
         }
     }

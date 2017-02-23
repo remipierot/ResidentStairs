@@ -36,9 +36,9 @@ public class BossBehaviour : MonoBehaviour {
 
 	}
 
-    public void takeHit()
+    public void takeHit(int hit)
     {
-        life--;
+        life -= hit;
         m_hitParticleSystem.GetComponent<BossHitParticle>().hit = true;
         if (life == 0) Die();
     }
