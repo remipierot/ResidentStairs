@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour {
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
 	public GameObject Outline;
+    public bool IsAlive = true;
 
 	private bool IsBlack = false;
 
@@ -34,7 +35,9 @@ public class EnemyScript : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Shot") || other.CompareTag("Player"))
+		bool canBeKilled = (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
+
+		if (canBeKilled && (other.CompareTag("Shot") || other.CompareTag("Player")))
 		{
             if(other.CompareTag("Shot"))
             {
@@ -51,10 +54,32 @@ public class EnemyScript : MonoBehaviour {
 
 		GetComponent<MeshRenderer>().material = (IsBlack) ? BlackMaterial : WhiteMaterial;
 		Outline.GetComponent<MeshRenderer>().material = (IsBlack) ? WhiteMaterial : BlackMaterial;
+
+		if(!FindObjectOfType<GameManagerBehavior>().switchColor)
+		{
+			SwapMaterial();
+		}
+	}
+
+	public void SwapMaterial()
+	{
+		MeshRenderer render;
+		MeshRenderer outlineRender;
+		Material ship;
+		Material outline;
+
+		render = GetComponent<MeshRenderer>();
+		outlineRender = Outline.GetComponent<MeshRenderer>();
+		ship = render.material;
+		outline = outlineRender.material;
+
+		render.material = outline;
+		outlineRender.material = ship;
 	}
 
 	public void Die()
     {
+        IsAlive = false;
         Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
 		GetComponent<MeshRenderer>().material = dying;
@@ -65,7 +90,10 @@ public class EnemyScript : MonoBehaviour {
 
 		if(BonusCarried != null)
 		{
-			Instantiate(BonusCarried, transform.position, Quaternion.identity);
+            if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
+                Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));
+            else
+			    Instantiate(BonusCarried, transform.position, Quaternion.identity);
 		}
 
 		KillScript.enabled = true;

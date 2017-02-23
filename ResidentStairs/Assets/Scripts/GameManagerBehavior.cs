@@ -20,6 +20,16 @@ public class GameManagerBehavior : MonoBehaviour {
             nextSwitch = Time.time + switchCooldown;
 
             cam.GetComponent<BWImageEffect>().black = !cam.GetComponent<BWImageEffect>().black;
+
+			EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
+
+			foreach(EnemyScript e in enemies)
+			{
+                if(e.IsAlive)
+                {
+				    e.SwapMaterial();
+                }
+			}
         }      
     }
 

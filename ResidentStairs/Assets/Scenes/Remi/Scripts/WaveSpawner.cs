@@ -50,6 +50,8 @@ public class WaveSpawner : MonoBehaviour {
 						break;
 				}
 
+				Debug.Log(waveType.ToString());
+
 				for (int i = 0; i < EnemyCount; i++)
 				{
 					if(SpawnEnabled)
