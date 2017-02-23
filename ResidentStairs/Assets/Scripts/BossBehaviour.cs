@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossBehaviour : MonoBehaviour {
 
@@ -21,6 +22,8 @@ public class BossBehaviour : MonoBehaviour {
 
     public ParticleSystem m_deathParticle;
 	public BossHeartBehaviour m_heart;
+
+    public GameObject torus;
 
 	// Use this for initialization
 	void Start () {
@@ -61,6 +64,20 @@ public class BossBehaviour : MonoBehaviour {
     void ACTIVATINGMOTORS()
     {
         alive = true;
+        InvokeRepeating("shotTorus", 5.0f, 3.0f);
+    }
+
+    void shotTorus()
+    {
+        Vector3 curPos = m_transform.position;
+        GameObject o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+        curPos.y += 5.0f;
+        o.GetComponent<TorusBehaviour>().yDirection = 0.0f;
+        o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+        curPos.y -= 10.0f;
+        o.GetComponent<TorusBehaviour>().yDirection = -2.0f;
+        o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+        o.GetComponent<TorusBehaviour>().yDirection = 2.0f;
     }
 
     public void takeHit(int hit)
@@ -79,5 +96,12 @@ public class BossBehaviour : MonoBehaviour {
 		m_heart.StopSwapingColor();
         m_deathParticle.Emit(10000);
         m_meshContainer.SetActive(false);
+
+        Invoke("ReloadTitleScene", 5.0f);
+    }
+
+    void ReloadTitleScene()
+    {
+        SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
 }
