@@ -9,11 +9,12 @@ public class BossHeartBehaviour : MonoBehaviour {
 	public Material WhiteMaterial;
 
 	private bool IsBlack;
+	private bool IsMaterialBlack;
 
 	// Use this for initialization
 	void Start ()
 	{
-		IsBlack = true;
+		SetColor(true);
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -37,6 +38,20 @@ public class BossHeartBehaviour : MonoBehaviour {
 		render = GetComponent<MeshRenderer>();
 		boss = render.material;
 
-		render.material = (IsBlack) ? WhiteMaterial : BlackMaterial;
+		render.material = (IsMaterialBlack) ? WhiteMaterial : BlackMaterial;
+		IsMaterialBlack = !IsMaterialBlack;
+	}
+
+	public void SetColor(bool black)
+	{
+		IsBlack = black;
+		IsMaterialBlack = black;
+
+		GetComponent<MeshRenderer>().material = (IsBlack) ? BlackMaterial : WhiteMaterial;
+
+		if (!FindObjectOfType<GameManagerBehavior>().switchColor)
+		{
+			SwapMaterial();
+		}
 	}
 }
