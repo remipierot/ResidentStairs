@@ -11,12 +11,13 @@ public class BossHeartBehaviour : MonoBehaviour {
 
 	private bool IsBlack;
 	private bool IsMaterialBlack;
+	private Coroutine SwapingColor;
 
 	// Use this for initialization
 	void Start ()
 	{
 		SetColor(true);
-		StartCoroutine(SwapColor());
+		SwapingColor = StartCoroutine(SwapColor());
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +28,7 @@ public class BossHeartBehaviour : MonoBehaviour {
         {
             if (other.CompareTag("Shot"))
             {
+				StopCoroutine(SwapingColor);
                 Destroy(other.gameObject);
             }
 
