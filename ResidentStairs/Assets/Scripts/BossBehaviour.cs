@@ -16,7 +16,7 @@ public class BossBehaviour : MonoBehaviour {
     public Vector3 boundDown;
     public float speed;
     bool goingUp = true;
-    bool alive = true;
+    bool alive = false;
     bool arriving = true;
 
     public ParticleSystem m_deathParticle;
@@ -36,7 +36,7 @@ public class BossBehaviour : MonoBehaviour {
             if (m_transform.position.z <= midPos.z)
             {
                 arriving = false;
-                alive = true;
+                Invoke("ACTIVATINGMOTORS", 1.0f);
             }
         }
 
@@ -55,6 +55,11 @@ public class BossBehaviour : MonoBehaviour {
 
         }
 
+    }
+
+    void ACTIVATINGMOTORS()
+    {
+        alive = true;
     }
 
     public void takeHit(int hit)
