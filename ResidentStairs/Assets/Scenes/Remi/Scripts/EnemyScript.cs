@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour {
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
 	public GameObject Outline;
+    public bool IsAlive = true;
 
 	private bool IsBlack = false;
 
@@ -78,6 +79,7 @@ public class EnemyScript : MonoBehaviour {
 
 	public void Die()
     {
+        IsAlive = false;
         Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
 		GetComponent<MeshRenderer>().material = dying;
