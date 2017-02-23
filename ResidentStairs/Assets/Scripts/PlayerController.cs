@@ -17,9 +17,8 @@ public class PlayerController : MonoBehaviour {
 
 
     [SerializeField] private float speed;
-    private float oldMoveVert = 0.0f;
-    private float oldMoveHor = 0.0f;
-    [SerializeField]  private float movement;
+    private Vector3 oldVelocity = new Vector3 (0.0f,0.0f,0.0f);
+    [SerializeField]  private float floatingLength;
 
 
     [SerializeField] private float tiltFactor;
@@ -119,18 +118,11 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
+        Vector3 movement = new Vector3(0.0f, moveVertical, moveHorizontal);
 
+        rigidbody.velocity = oldVelocity + ((movement*speed) - oldVelocity)*floatingLength;
 
-        Vector3 movement = new Vector3(0.0f, (oldMoveVert + (moveVertical-oldMoveVert)/1.0f), moveHorizontal);
-
-
-
-
-
-        rigidbody.velocity = movement * speed;
-
-        oldMoveVert = moveVertical;
-        oldMoveHor = moveHorizontal;
+        oldVelocity = rigidbody.velocity;
 
         rigidbody.position = new Vector3
         (
