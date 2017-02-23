@@ -13,6 +13,7 @@ public class TorusBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_transform = GetComponent<Transform>();
+        Destroy(this.gameObject, 8.0f);
     }
 	
 	// Update is called once per frame

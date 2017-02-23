@@ -293,7 +293,8 @@ public class PlayerController : MonoBehaviour {
 
                     foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
                     {
-                        enemy.GetComponent<EnemyScript>().Die();
+                        if(enemy.GetComponent<EnemyScript>() != null) enemy.GetComponent<EnemyScript>().Die();
+                        if (enemy.GetComponent<TorusBehaviour>() != null) enemy.GetComponent<TorusBehaviour>().Die();
                     }
 
                     boss.GetComponent<BossBehaviour>().takeHit(bombDamage);

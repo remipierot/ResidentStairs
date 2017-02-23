@@ -70,6 +70,7 @@ public class BossBehaviour : MonoBehaviour {
     void shotTorus()
     {
         Vector3 curPos = m_transform.position;
+        curPos.z -= 10.0f;
         GameObject o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
         curPos.y += 5.0f;
         o.GetComponent<TorusBehaviour>().yDirection = 0.0f;
