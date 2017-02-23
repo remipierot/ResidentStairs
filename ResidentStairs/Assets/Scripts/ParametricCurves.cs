@@ -8,7 +8,7 @@ public class ParametricCurves {
 		Vector2 p = Vector2.zero;
 
 		p.x = t;
-		p.y = Mathf.Sin(t * 360.0f);
+		p.y = Mathf.Sin(t * 2*Mathf.PI);
 
 		return p;
 	}
@@ -41,6 +41,26 @@ public class ParametricCurves {
 
 		p.x = Mathf.Cos(a * t) - Mathf.Pow(Mathf.Cos(b * t), j);
 		p.y = Mathf.Sin(c * t) - Mathf.Pow(Mathf.Sin(d * t), k);
+
+		return p;
+	}
+
+	public static Vector2 Plus(float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = 0;
+		p.y = 0;
+
+		return p;
+	}
+
+	public static Vector2 Arc(float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = 0;
+		p.y = 0;
 
 		return p;
 	}

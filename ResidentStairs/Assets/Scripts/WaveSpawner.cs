@@ -59,16 +59,14 @@ public class WaveSpawner : MonoBehaviour {
 						break;
 				}
 
-				Debug.Log(waveType.ToString());
-
 				for (int i = 0; i < EnemyCount; i++)
 				{
 					if(SpawnEnabled)
 					{
 						Vector2 p = Vector2.zero;
-						p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
+						p = ParametricCurves.Sinus(5.0f * (float)i / (float)EnemyCount);
 
-						Vector3 spawnPosition = new Vector3(SpawnRange.x, 10.0f * p.y, SpawnRange.z);
+						Vector3 spawnPosition = new Vector3(SpawnRange.x, 13*p.y, SpawnRange.z);
 
 						GameObject enemy = Instantiate(Enemy);
 						EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();
