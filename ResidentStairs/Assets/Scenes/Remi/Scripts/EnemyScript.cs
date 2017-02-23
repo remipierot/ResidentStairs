@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour {
+
 	private Rigidbody _Body;
 	private BoxCollider _Collider0;
 	private CapsuleCollider _Collider1;
@@ -40,8 +41,8 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	public void Die()
-	{
-		Material dying = new Material(DyingMaterial);
+    {
+        Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
 		GetComponent<MeshRenderer>().material = dying;
 		_Collider0.enabled = false;

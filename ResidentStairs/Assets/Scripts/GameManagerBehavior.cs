@@ -14,7 +14,7 @@ public class GameManagerBehavior : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButton("Fire2") && Time.time > nextSwitch)
+        if (Input.GetButtonUp("Fire3") && Time.time > nextSwitch)
         {
             switchColor = !switchColor;
             nextSwitch = Time.time + switchCooldown;

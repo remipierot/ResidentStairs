@@ -12,6 +12,9 @@ public class Boundary
 
 public class PlayerController : MonoBehaviour {
 
+    [SerializeField] private AudioSource shotSound;
+    [SerializeField] private AudioSource bombSound;
+
     [SerializeField] private float speed;
     [SerializeField] private float tiltFactor;
     [SerializeField] private Rigidbody rigidbody;
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour {
             }
             other.gameObject.GetComponent<BonusBehaviour>().catchBonus();
         }
-        else if(other.tag == "Enemy")
+        else if(other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             if (barrierActive)
             {
@@ -204,38 +207,43 @@ public class PlayerController : MonoBehaviour {
         if(Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
+
+            shotSound.Play();
+
             if (numberOfShots == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f,0.0f,90.0f)) as GameObject;
+                Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f,0.0f,90.0f));
             }
             else if (numberOfShots == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
+                Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
             }
             else if (numberOfShots == 3)
             {
-                GameObject clone = Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
-                GameObject clone3 = Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                Instantiate(shot, shotSpawnDroite.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
+                Instantiate(shot, shotSpawnCentre.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
+                Instantiate(shot, shotSpawnGauche.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
             }
 
             if(numberOfSatelittes == 1)
             {
-                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
             }
             else if(numberOfSatelittes == 2)
             {
-                GameObject clone = Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
-                GameObject clone2 = Instantiate(shot, shotSpawnSat2.position, Quaternion.Euler(0.0f, 0.0f, 90.0f)) as GameObject;
+                Instantiate(shot, shotSpawnSat1.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
+               Instantiate(shot, shotSpawnSat2.position, Quaternion.Euler(0.0f, 0.0f, 90.0f));
             }
         }
 
         if (numberOfBombs > 0)
         {
-            if (Input.GetButton("Fire3") && Time.time > nextBomb)
+            if (Input.GetButton("Fire2") && Time.time > nextBomb)
             {
                 nextBomb = Time.time + bombRate;
+
+                bombSound.Play();
 
                 numberOfBombs--;
 

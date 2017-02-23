@@ -17,7 +17,7 @@ public class BossHitParticle : MonoBehaviour {
     {
         if (hit)
         {
-            m_partSystem.Emit(30);
+            m_partSystem.Emit(50);
             hit = false;
         }
     }
