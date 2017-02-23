@@ -21,7 +21,9 @@ public class BossHeartBehaviour : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shot") || other.CompareTag("Player"))
+		bool canBeHit = (FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (!FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
+
+		if (canBeHit && (other.CompareTag("Shot") || other.CompareTag("Player")))
         {
             if (other.CompareTag("Shot"))
             {
