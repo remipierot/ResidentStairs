@@ -15,10 +15,10 @@ public class WaveSpawner : MonoBehaviour {
 
 	public enum WaveType
 	{
-		SINUS,
-		ROWS,
-		PLUS,
-		ARC
+		BLACK,
+		WHITE,
+		HALF,
+		QUARTER
 	}
 
 	void Start()
@@ -35,38 +35,44 @@ public class WaveSpawner : MonoBehaviour {
 		{
 			if(SpawnEnabled)
 			{
+				int r = (int)(Random.Range(0.0f, 1.0f) * 3.99f);
+				WaveType waveType;
+
+				switch(r)
+				{
+					case 0: waveType = WaveType.BLACK;
+						break;
+					case 1: waveType = WaveType.WHITE;
+						break;
+					case 2: waveType = WaveType.HALF;
+						break;
+					default: waveType = WaveType.QUARTER;
+						break;
+				}
+
 				for (int i = 0; i < EnemyCount; i++)
 				{
 					if(SpawnEnabled)
 					{
-						float r = Random.Range(0.0f, 1.0f) * 4.0f;
 						Vector2 p = Vector2.zero;
+						p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
 
-						if(r <= 1.0f)
-						{
-							p = ParametricCurves.Sinus((float)i / (float)EnemyCount);
-						}
-						else if(r <= 2.0f)
-						{
-
-						}
-						else if(r <= 3.0f)
-						{
-
-						}
-						else if(r <= 4.0f)
-						{
-
-						}
-
-						Vector3 spawnPosition = new Vector3(SpawnRange.x, 3.5f * p.y, SpawnRange.z);
+						Vector3 spawnPosition = new Vector3(SpawnRange.x, 10.0f * p.y, SpawnRange.z);
 
 						GameObject enemy = Instantiate(Enemy);
+						EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();
 						enemy.transform.position = spawnPosition;
+
+						bool enemyIsBlack =
+							(waveType == WaveType.BLACK) ||
+							(waveType == WaveType.HALF && i < EnemyCount / 2.0f) ||
+							(waveType == WaveType.QUARTER && (i < EnemyCount / 4.0f || (i >= 2.0f * EnemyCount / 4.0f && i < 3.0f * EnemyCount / 4.0f)));
+
+						enemyScript.SetColor(enemyIsBlack);
 
 						if(Bonuses.HasToPopABonus())
 						{
-							enemy.GetComponent<EnemyScript>().BonusCarried = Bonuses.GetNextBonus();
+							enemyScript.BonusCarried = Bonuses.GetNextBonus();
 						}
 
 						yield return new WaitForSeconds(TimeBetweenEnemySpawn);
