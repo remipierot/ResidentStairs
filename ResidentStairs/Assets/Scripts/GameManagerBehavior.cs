@@ -30,14 +30,21 @@ public class GameManagerBehavior : MonoBehaviour {
 				    e.SwapMaterial();
                 }
 			}
-
-			FindObjectOfType<BossHeartBehaviour>().SwapMaterial();
+            if (SceneManager.GetActiveScene().name == "FinalScene")
+                FindObjectOfType<BossHeartBehaviour>().SwapMaterial();
         }      
     }
 
     public void ResetGame()
     {
         // Only specifying the sceneName or sceneBuildIndex will load the scene with the Single mode
-        SceneManager.LoadScene("FinalScene", LoadSceneMode.Single);
+        if(SceneManager.GetActiveScene().name == "TitleScreen")
+        {
+            SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
+        }
+        else
+        {
+            SceneManager.LoadScene("FinalScene", LoadSceneMode.Single);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyScript : MonoBehaviour {
 
@@ -96,7 +97,24 @@ public class EnemyScript : MonoBehaviour {
 			    Instantiate(BonusCarried, transform.position, Quaternion.identity);
 		}
 
-		KillScript.enabled = true;
+        if (SceneManager.GetActiveScene().name == "TitleScreen")
+        {
+            if (gameObject.name == ("Enemy_PLAY"))
+            {
+                Invoke("LoadGame", 2.0f);
+            }
+            else if (gameObject.name == ("Enemy_QUIT"))
+            {
+                Application.Quit();
+            }
+        }
+
+        KillScript.enabled = true;
 		KillScript.SetMaterial(dying);
 	}
+
+    private void LoadGame()
+    {
+        SceneManager.LoadScene("FinalScene", LoadSceneMode.Single);
+    }
 }
