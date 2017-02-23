@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BonusManager : MonoBehaviour {
+
 	public float TimeBetweenPotentialBonus;
 	public float SatelliteProbability;
 	public float MultiplicatorProbability;

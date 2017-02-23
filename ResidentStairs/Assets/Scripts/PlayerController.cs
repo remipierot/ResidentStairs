@@ -58,24 +58,24 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Bonus")
+        if(other.CompareTag("Bonus"))
         {
-            switch (other.name)
+            switch (other.GetComponent<BonusBehaviour>().bonusType)
             {
-                case "Weapon (Clone)":
+                case BonusBehaviour.BonusType.WEAPON:
                     if (numberOfShots < 3) numberOfShots++;
                     break;
-                case "Shield (Clone)":
+                case BonusBehaviour.BonusType.SHIELD:
                     if (!barrierActive)
                     {
                         barrierActive = true;
                         myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                     }
                     break;
-                case "Satellite (Clone)":
+                case BonusBehaviour.BonusType.SAT:
                     if (numberOfSatelittes < 3) numberOfSatelittes++;
                     break;
-                case "Bomb (Clone)":
+                case BonusBehaviour.BonusType.BOMB:
                     if (numberOfBombs < 3) numberOfBombs++;
                     break;
                 default:

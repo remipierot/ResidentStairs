@@ -9,7 +9,7 @@ public class DestroyedAnim : MonoBehaviour {
 	public bool state = false;
 
 	float disp = 0.0f;
-	float dispMax = 300000.0f;
+	float dispMax = 10000.0f;
 
 	public void SetMaterial(Material m)
 	{
@@ -23,7 +23,7 @@ public class DestroyedAnim : MonoBehaviour {
 			m_particleSystem.Emit(30);
 		}
 
-		disp += 100000f * Time.deltaTime;
+		disp += 3000.0f * Time.deltaTime;
 		if (disp >= dispMax)
 		{
 			disp = 0.0f;

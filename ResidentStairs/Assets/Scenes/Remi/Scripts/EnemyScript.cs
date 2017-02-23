@@ -30,6 +30,11 @@ public class EnemyScript : MonoBehaviour {
 	{
 		if(other.CompareTag("Shot") || other.CompareTag("Player"))
 		{
+            if(other.CompareTag("Shot"))
+            {
+                Destroy(other.gameObject);
+            }
+
 			Die();
 		}
 	}

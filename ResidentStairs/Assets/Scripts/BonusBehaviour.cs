@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BonusBehaviour : MonoBehaviour {
+    
+    public enum BonusType
+    {
+        WEAPON,
+        SHIELD,
+        SAT,
+        BOMB
+    }
 
     Transform m_transform;
     public float speed;
     public float lifeTime;
+    public BonusType bonusType = BonusType.WEAPON;
 
     // Use this for initialization
     void Start()
