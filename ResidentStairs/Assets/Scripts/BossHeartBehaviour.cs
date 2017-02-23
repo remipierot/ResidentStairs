@@ -20,7 +20,7 @@ public class BossHeartBehaviour : MonoBehaviour {
                 Destroy(other.gameObject);
             }
 
-            bossParent.GetComponent<BossBehaviour>().takeHit();
+            bossParent.GetComponent<BossBehaviour>().takeHit(1);
         }
     }
 }
