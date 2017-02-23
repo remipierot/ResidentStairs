@@ -6,7 +6,7 @@ public class DestroyByBoundary : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Shot")
+        if(other.tag == "Enemy")
             Destroy(other.gameObject);
     }
 }

@@ -88,7 +88,10 @@ public class EnemyScript : MonoBehaviour {
 
 		if(BonusCarried != null)
 		{
-			Instantiate(BonusCarried, transform.position, Quaternion.identity);
+            if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
+                Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));
+            else
+			    Instantiate(BonusCarried, transform.position, Quaternion.identity);
 		}
 
 		KillScript.enabled = true;
