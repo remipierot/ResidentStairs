@@ -72,12 +72,13 @@
 				float4 v = voronoi(b);
 				float2 q = v.yz;
 
-				float a = _Time.y + atan2(q.x, sign(v.w - 1.0) * q.y);
-				float l = length(q * 5.0 / (sqrt(v.x))) + 0.319 * a;
+				//float a = _Time.y + atan2(q.x, sign(v.w - 1.0) * q.y);
+				float l = length(q * 5.0 / (sqrt(v.x))); //+ 0.319 * a;
 				float m = fmod(l, 2.0);
 				float w = min(fwidth(fmod(l + 1.5, 2.0)), fwidth(fmod(l + 0.5, 2.0))) / 2.0;
 				float o = (1.0 - smoothstep(1.85 - w, 1.85 + w, m)) * smoothstep(1.15 - w, 1.15 + w, m);
 				o = lerp(0.0, o, smoothstep(0.04, 0.07, v.x));
+				o = clamp(o, 0.3f, 0.7f);
 
 				color = float4(o, o, o, 1);
 
