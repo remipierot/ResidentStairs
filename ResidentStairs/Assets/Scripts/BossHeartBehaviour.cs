@@ -7,18 +7,23 @@ public class BossHeartBehaviour : MonoBehaviour {
     public GameObject bossParent;
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
+	public float TimeBetweenColorSwitches;
 
 	private bool IsBlack;
+	private bool IsMaterialBlack;
 
 	// Use this for initialization
 	void Start ()
 	{
-		IsBlack = true;
+		SetColor(true);
+		StartCoroutine(SwapColor());
 	}
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shot") || other.CompareTag("Player"))
+		bool canBeHit = (FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (!FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
+
+		if (canBeHit && (other.CompareTag("Shot") || other.CompareTag("Player")))
         {
             if (other.CompareTag("Shot"))
             {
@@ -37,6 +42,29 @@ public class BossHeartBehaviour : MonoBehaviour {
 		render = GetComponent<MeshRenderer>();
 		boss = render.material;
 
-		render.material = (IsBlack) ? WhiteMaterial : BlackMaterial;
+		render.material = (IsMaterialBlack) ? WhiteMaterial : BlackMaterial;
+		IsMaterialBlack = !IsMaterialBlack;
+	}
+
+	public void SetColor(bool black)
+	{
+		IsBlack = black;
+		IsMaterialBlack = black;
+
+		GetComponent<MeshRenderer>().material = (IsBlack) ? BlackMaterial : WhiteMaterial;
+
+		if (!FindObjectOfType<GameManagerBehavior>().switchColor)
+		{
+			SwapMaterial();
+		}
+	}
+
+	private IEnumerator SwapColor()
+	{
+		while (true)
+		{
+			SetColor(!IsBlack);
+			yield return new WaitForSeconds(TimeBetweenColorSwitches);
+		}
 	}
 }
