@@ -30,6 +30,8 @@ public class GameManagerBehavior : MonoBehaviour {
 				    e.SwapMaterial();
                 }
 			}
+
+			FindObjectOfType<BossHeartBehaviour>().SwapMaterial();
         }      
     }
 
