@@ -12,7 +12,12 @@ public class EnemyScript : MonoBehaviour {
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
 	public GameObject BonusCarried;
-	public bool IsBlack = false;
+
+	public Material BlackMaterial;
+	public Material WhiteMaterial;
+	public GameObject Outline;
+
+	private bool IsBlack = false;
 
 	// Use this for initialization
 	void Start ()
@@ -40,6 +45,14 @@ public class EnemyScript : MonoBehaviour {
 		}
 	}
 
+	public void SetColor(bool black)
+	{
+		IsBlack = black;
+
+		GetComponent<MeshRenderer>().material = (IsBlack) ? BlackMaterial : WhiteMaterial;
+		Outline.GetComponent<MeshRenderer>().material = (IsBlack) ? WhiteMaterial : BlackMaterial;
+	}
+
 	public void Die()
     {
         Material dying = new Material(DyingMaterial);
@@ -48,6 +61,7 @@ public class EnemyScript : MonoBehaviour {
         gameObject.tag = "Untagged"; // pour ne plus être considéré comme ennemi après la mort
 		_Collider0.enabled = false;
 		_Collider1.enabled = false;
+		Outline.SetActive(false);
 
 		if(BonusCarried != null)
 		{
