@@ -45,6 +45,7 @@ public class EnemyScript : MonoBehaviour {
         Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
 		GetComponent<MeshRenderer>().material = dying;
+        gameObject.tag = "Untagged"; // pour ne plus être considéré comme ennemi après la mort
 		_Collider0.enabled = false;
 		_Collider1.enabled = false;
 

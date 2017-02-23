@@ -76,7 +76,11 @@ public class PlayerController : MonoBehaviour {
                     }
                     break;
                 case BonusBehaviour.BonusType.SAT:
-                    if (numberOfSatelittes < 3) numberOfSatelittes++;
+                    if (numberOfSatelittes < 3)
+                    {
+                        numberOfSatelittes++;
+                    }
+                    if (numberOfSatelittes >= 3) numberOfSatelittes = 2;
                     break;
                 case BonusBehaviour.BonusType.BOMB:
                     if (numberOfBombs < 3) numberOfBombs++;
