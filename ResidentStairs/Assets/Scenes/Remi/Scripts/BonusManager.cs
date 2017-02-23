@@ -8,10 +8,12 @@ public class BonusManager : MonoBehaviour {
 	public float SatelliteProbability;
 	public float MultiplicatorProbability;
 	public float ShieldProbability;
+	public float NukeProbability;
 
 	public GameObject Satellite;
 	public GameObject Multiplicator;
 	public GameObject Shield;
+	public GameObject Nuke;
 
 	private GameObject NextBonus;
 	private float LastSpawnTime = 0;
@@ -33,6 +35,7 @@ public class BonusManager : MonoBehaviour {
 				float firstFloor = SatelliteProbability;
 				float secondFloor = firstFloor + MultiplicatorProbability;
 				float thirdFloor = secondFloor + ShieldProbability;
+				float fourthFloor = thirdFloor + NukeProbability;
 
 				if(r < firstFloor)
 				{
@@ -45,6 +48,10 @@ public class BonusManager : MonoBehaviour {
 				else if(r < thirdFloor)
 				{
 					NextBonus = Shield;
+				}
+				else if(r < fourthFloor)
+				{
+					NextBonus = Nuke;
 				}
 			}
 		}
