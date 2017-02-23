@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour {
 	public GameObject Enemy;
+    public GameObject Boss;
 	public Vector3 SpawnRange;
 	public int EnemyCount;
 	public float TimeBetweenEnemySpawn;
 	public float TimeBeforeFirstWave;
 	public float TimeBetweenWaves;
-	public bool SpawnEnabled;
+    public float TimeBeforeBoss;
+    public bool SpawnEnabled;
 
 	public BonusManager Bonuses;
+    public int numWaves = 10;
+    int waveCpt = 0;
+
 
 	public enum WaveType
 	{
@@ -25,15 +30,19 @@ public class WaveSpawner : MonoBehaviour {
 	{
 		Bonuses.Notify();
 		StartCoroutine(SpawnWaves());
-	}
+        waveCpt = 0;
+        Boss.gameObject.SetActive(false);
+    }
 
 	IEnumerator SpawnWaves()
 	{
 		yield return new WaitForSeconds(TimeBeforeFirstWave);
 
-		while (true)
+		while (waveCpt < numWaves)
 		{
-			if(SpawnEnabled)
+            waveCpt++;
+
+            if (SpawnEnabled)
 			{
 				int r = (int)(Random.Range(0.0f, 1.0f) * 3.99f);
 				WaveType waveType;
@@ -84,5 +93,9 @@ public class WaveSpawner : MonoBehaviour {
 
 			yield return new WaitForSeconds(TimeBetweenWaves);
 		}
+
+        yield return new WaitForSeconds(TimeBeforeBoss);
+
+        Boss.SetActive(true);
 	}
 }
