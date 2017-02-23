@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 [System.Serializable]
 public class Boundary
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float tiltFactor;
     [SerializeField] private Rigidbody rigidbody;
+    [SerializeField] private Collider collider;
     [SerializeField] private GameObject shot;
     [SerializeField] private Transform shotSpawnDroite;
     [SerializeField] private Transform shotSpawnCentre;
@@ -113,8 +116,11 @@ public class PlayerController : MonoBehaviour {
                 }
                 else
                 {
-                    Mort();
-                    Invoke("ResetGame", 3.0f);
+                    if (SceneManager.GetActiveScene().name == "FinalScene")
+                    {
+                        Mort();
+                        Invoke("ResetGame", 3.0f);
+                    }
                 }
             }
         }
@@ -123,6 +129,7 @@ public class PlayerController : MonoBehaviour {
     void Mort()
     {
         alive = false;
+        collider.enabled = false;
         rigidbody.velocity = new Vector3(0.0f,0.0f,0.0f);
         m_deathParticle.Emit(500);
         myMesh.SetActive(false);
@@ -130,7 +137,7 @@ public class PlayerController : MonoBehaviour {
 
     void ResetGame()
     {
-        gameManager.GetComponent<GameManagerBehavior>().ResetGame();
+        SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
 
     void FixedUpdate()

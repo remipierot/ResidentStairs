@@ -98,6 +98,9 @@ public class EnemyScript : MonoBehaviour {
             else
 			    Instantiate(BonusCarried, transform.position, Quaternion.identity);
 		}
+        
+        KillScript.enabled = true;
+		KillScript.SetMaterial(dying);
 
         if (SceneManager.GetActiveScene().name == "TitleScreen")
         {
@@ -110,10 +113,7 @@ public class EnemyScript : MonoBehaviour {
                 Application.Quit();
             }
         }
-
-        KillScript.enabled = true;
-		KillScript.SetMaterial(dying);
-	}
+    }
 
     private void LoadGame()
     {
