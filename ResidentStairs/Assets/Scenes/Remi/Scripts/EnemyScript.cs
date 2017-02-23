@@ -51,6 +51,27 @@ public class EnemyScript : MonoBehaviour {
 
 		GetComponent<MeshRenderer>().material = (IsBlack) ? BlackMaterial : WhiteMaterial;
 		Outline.GetComponent<MeshRenderer>().material = (IsBlack) ? WhiteMaterial : BlackMaterial;
+
+		if(!FindObjectOfType<GameManagerBehavior>().switchColor)
+		{
+			SwapMaterial();
+		}
+	}
+
+	public void SwapMaterial()
+	{
+		MeshRenderer render;
+		MeshRenderer outlineRender;
+		Material ship;
+		Material outline;
+
+		render = GetComponent<MeshRenderer>();
+		outlineRender = Outline.GetComponent<MeshRenderer>();
+		ship = render.material;
+		outline = outlineRender.material;
+
+		render.material = outline;
+		outlineRender.material = ship;
 	}
 
 	public void Die()
