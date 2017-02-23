@@ -238,7 +238,13 @@ public class PlayerController : MonoBehaviour {
                 nextBomb = Time.time + bombRate;
 
                 numberOfBombs--;
-                //DECLENCHEMENT DE LA BOMBE
+
+                Camera.main.GetComponent<Screenshake>().shake = 0.8f;
+
+                foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    enemy.GetComponent<EnemyScript>().Die();
+                }
             }
         }
     }

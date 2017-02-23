@@ -39,7 +39,7 @@ public class EnemyScript : MonoBehaviour {
 		}
 	}
 
-	private void Die()
+	public void Die()
 	{
 		Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
