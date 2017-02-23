@@ -7,6 +7,7 @@ public class BossHeartBehaviour : MonoBehaviour {
     public GameObject bossParent;
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
+	public float TimeBetweenColorSwitches;
 
 	private bool IsBlack;
 	private bool IsMaterialBlack;
@@ -15,6 +16,7 @@ public class BossHeartBehaviour : MonoBehaviour {
 	void Start ()
 	{
 		SetColor(true);
+		StartCoroutine(SwapColor());
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -52,6 +54,15 @@ public class BossHeartBehaviour : MonoBehaviour {
 		if (!FindObjectOfType<GameManagerBehavior>().switchColor)
 		{
 			SwapMaterial();
+		}
+	}
+
+	private IEnumerator SwapColor()
+	{
+		while (true)
+		{
+			SetColor(!IsBlack);
+			yield return new WaitForSeconds(TimeBetweenColorSwitches);
 		}
 	}
 }
