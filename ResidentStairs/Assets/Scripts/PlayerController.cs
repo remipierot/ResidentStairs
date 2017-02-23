@@ -15,7 +15,12 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private AudioSource shotSound;
     [SerializeField] private AudioSource bombSound;
 
+
     [SerializeField] private float speed;
+    private Vector3 oldVelocity = new Vector3 (0.0f,0.0f,0.0f);
+    [SerializeField]  private float floatingLength;
+
+
     [SerializeField] private float tiltFactor;
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private GameObject shot;
@@ -52,6 +57,7 @@ public class PlayerController : MonoBehaviour {
 
     private float nextBomb = 0.0f;
     [SerializeField] private float bombRate;
+
 
     // Use this for initialization
     void Start () {
@@ -114,7 +120,9 @@ public class PlayerController : MonoBehaviour {
 
         Vector3 movement = new Vector3(0.0f, moveVertical, moveHorizontal);
 
-        rigidbody.velocity = movement * speed;
+        rigidbody.velocity = oldVelocity + ((movement*speed) - oldVelocity)*floatingLength;
+
+        oldVelocity = rigidbody.velocity;
 
         rigidbody.position = new Vector3
         (
@@ -243,7 +251,7 @@ public class PlayerController : MonoBehaviour {
 
         if (numberOfBombs > 0)
         {
-            if (Input.GetButton("Fire2") && Time.time > nextBomb)
+            if (Input.GetButtonUp("Fire2") && Time.time > nextBomb)
             {
                 nextBomb = Time.time + bombRate;
 
@@ -251,7 +259,7 @@ public class PlayerController : MonoBehaviour {
 
                 numberOfBombs--;
 
-                Camera.main.GetComponent<Screenshake>().shake = 0.8f;
+                Camera.main.GetComponent<Screenshake>().startShaking(0.8f);
 
                 foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
                 {
