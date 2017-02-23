@@ -18,6 +18,7 @@ public class EnemyScript : MonoBehaviour {
 	public Material WhiteMaterial;
 	public GameObject Outline;
     public bool IsAlive = true;
+	public BossHitParticle HitParticles;
 
 	private bool IsBlack = false;
 
@@ -88,6 +89,7 @@ public class EnemyScript : MonoBehaviour {
 		_Collider0.enabled = false;
 		_Collider1.enabled = false;
 		Outline.SetActive(false);
+		HitParticles.hit = true;
 
 		if(BonusCarried != null)
 		{
