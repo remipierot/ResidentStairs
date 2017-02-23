@@ -95,7 +95,9 @@ public class WaveSpawner : MonoBehaviour {
 		}
 
         yield return new WaitForSeconds(TimeBeforeBoss);
-
+        
+        
         Boss.SetActive(true);
+        Instantiate(Boss, new Vector3(0.0f, 0.0f, 40.0f), Quaternion.Euler(0.0f,180.0f,90.0f));
 	}
 }
