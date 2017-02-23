@@ -25,7 +25,10 @@ public class GameManagerBehavior : MonoBehaviour {
 
 			foreach(EnemyScript e in enemies)
 			{
-				e.SwapMaterial();
+                if(e.IsAlive)
+                {
+				    e.SwapMaterial();
+                }
 			}
         }      
     }

@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour {
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
 	public GameObject Outline;
+    public bool IsAlive = true;
 
 	private bool IsBlack = false;
 
@@ -78,6 +79,7 @@ public class EnemyScript : MonoBehaviour {
 
 	public void Die()
     {
+        IsAlive = false;
         Material dying = new Material(DyingMaterial);
 		dying.SetFloat("_Displacement", 0);
 		GetComponent<MeshRenderer>().material = dying;
@@ -88,7 +90,10 @@ public class EnemyScript : MonoBehaviour {
 
 		if(BonusCarried != null)
 		{
-			Instantiate(BonusCarried, transform.position, Quaternion.identity);
+            if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
+                Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));
+            else
+			    Instantiate(BonusCarried, transform.position, Quaternion.identity);
 		}
 
 		KillScript.enabled = true;
