@@ -31,7 +31,14 @@ public class GameManagerBehavior : MonoBehaviour {
                 }
 			}
             if (SceneManager.GetActiveScene().name == "FinalScene")
-                FindObjectOfType<BossHeartBehaviour>().SwapMaterial();
+			{
+				BossHeartBehaviour bossBehaviour = FindObjectOfType<BossHeartBehaviour>();
+
+				if(bossBehaviour != null)
+				{
+					bossBehaviour.SwapMaterial();
+				}
+			}
         }      
     }
 
