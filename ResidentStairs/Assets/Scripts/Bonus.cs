@@ -6,8 +6,5 @@ enum BONUS { WEAPON, SATELLITE, SHIELD, BOMB };
 
 
 public class Bonus : MonoBehaviour {
-
-
-    //public BONUS ;
-
+    
 }
