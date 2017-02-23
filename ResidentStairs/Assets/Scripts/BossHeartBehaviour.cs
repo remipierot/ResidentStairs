@@ -28,7 +28,6 @@ public class BossHeartBehaviour : MonoBehaviour {
         {
             if (other.CompareTag("Shot"))
             {
-				StopCoroutine(SwapingColor);
                 Destroy(other.gameObject);
             }
 
@@ -68,5 +67,10 @@ public class BossHeartBehaviour : MonoBehaviour {
 			SetColor(!IsBlack);
 			yield return new WaitForSeconds(TimeBetweenColorSwitches);
 		}
+	}
+
+	public void StopSwapingColor()
+	{
+		StopCoroutine(SwapingColor);
 	}
 }

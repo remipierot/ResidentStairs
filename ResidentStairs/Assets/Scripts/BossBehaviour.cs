@@ -20,6 +20,7 @@ public class BossBehaviour : MonoBehaviour {
     bool arriving = true;
 
     public ParticleSystem m_deathParticle;
+	public BossHeartBehaviour m_heart;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +76,7 @@ public class BossBehaviour : MonoBehaviour {
     void Die()
     {
         alive = false;
+		m_heart.StopSwapingColor();
         m_deathParticle.Emit(10000);
         m_meshContainer.SetActive(false);
     }
