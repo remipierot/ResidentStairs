@@ -267,7 +267,7 @@ public class PlayerController : MonoBehaviour {
 
                 numberOfBombs--;
 
-                Camera.main.GetComponent<Screenshake>().startShaking(0.8);
+                Camera.main.GetComponent<Screenshake>().startShaking(0.8f);
 
                 foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
                 {
