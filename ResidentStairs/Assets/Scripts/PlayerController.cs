@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 other.gameObject.GetComponent<BonusBehaviour>().catchBonus();
             }
-            else if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
+            else if (other.CompareTag("Enemy") || other.CompareTag("Boss") || other.CompareTag("MiniTorus"))
             {
                 if (barrierActive)
                 {
