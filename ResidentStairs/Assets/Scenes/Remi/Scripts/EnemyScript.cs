@@ -34,7 +34,9 @@ public class EnemyScript : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.CompareTag("Shot") || other.CompareTag("Player"))
+		bool canBeKilled = (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
+
+		if (canBeKilled && (other.CompareTag("Shot") || other.CompareTag("Player")))
 		{
             if(other.CompareTag("Shot"))
             {
