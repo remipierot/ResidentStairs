@@ -65,6 +65,12 @@ public class PlayerController : MonoBehaviour {
     private float nextFire = 0.0f;
     [SerializeField] private float fireRate;
 
+    private float nextHit = 0.1f;
+    [SerializeField] private float hitCD;
+
+        private float nextClignotement = 0.0f;
+    [SerializeField] private float clignotementCD;
+
     private float nextBomb = 0.0f;
     [SerializeField] private float bombRate;
     [SerializeField] private int bombDamage;
@@ -114,7 +120,11 @@ public class PlayerController : MonoBehaviour {
             {
                 if (barrierActive)
                 {
-                    if(other.CompareTag("Enemy"))
+                    nextHit = Time.time + hitCD;
+                    Debug.Log("BARRIERE");
+                    barrierActive = false;
+
+                    if (other.CompareTag("Enemy"))
                     {
                         if (other.GetComponent<EnemyScript>() != null) other.GetComponent<EnemyScript>().Die();
                     }
@@ -124,11 +134,10 @@ public class PlayerController : MonoBehaviour {
                         Destroy(other.gameObject);
                     }
 
-                    barrierActive = false;
                     myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
                     hitboxMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                 }
-                else
+                else if (Time.time > nextHit)
                 {
                     if (SceneManager.GetActiveScene().name == "FinalScene")
                     {
@@ -158,6 +167,21 @@ public class PlayerController : MonoBehaviour {
     {
         if (alive)
         {
+            //Clignotement invulnerabilité
+            if (Time.time < nextHit)
+            {
+                if (Time.time > nextClignotement)
+                {
+                    nextClignotement = Time.time + clignotementCD;
+                    myMesh.SetActive(!myMesh.activeInHierarchy);
+                }
+            }
+            else if (!myMesh.activeInHierarchy)
+            {
+                myMesh.SetActive(true);
+            }
+
+
             float moveHorizontal = Input.GetAxis("Horizontal");
             float moveVertical = Input.GetAxis("Vertical");
 
