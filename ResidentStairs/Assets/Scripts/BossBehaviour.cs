@@ -22,6 +22,7 @@ public class BossBehaviour : MonoBehaviour {
 
     public ParticleSystem m_deathParticle;
 	public BossHeartBehaviour m_heart;
+	public int TimeBetweenTorus = 6;
 
     public GameObject torus;
 
@@ -65,7 +66,7 @@ public class BossBehaviour : MonoBehaviour {
     void ACTIVATINGMOTORS()
     {
         alive = true;
-        InvokeRepeating("shotTorus", 5.0f, 3.0f);
+        InvokeRepeating("shotTorus", 5.0f, TimeBetweenTorus);
     }
 
     void shotTorus()
