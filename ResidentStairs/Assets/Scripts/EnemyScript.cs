@@ -24,6 +24,8 @@ public class EnemyScript : MonoBehaviour {
 	public BossHitParticle HitParticles;
 
 	private bool IsBlack = false;
+    public float maxLife = 10;
+    float life;
 
 	// Use this for initialization
 	void Start ()
@@ -31,7 +33,8 @@ public class EnemyScript : MonoBehaviour {
 		_Body = GetComponent<Rigidbody>();
 		_Collider0 = GetComponent<BoxCollider>();
 		_Collider1 = GetComponent<CapsuleCollider>();
-	}
+        life = maxLife;
+    }
 
 	private void Update()
 	{
@@ -49,7 +52,11 @@ public class EnemyScript : MonoBehaviour {
                 Destroy(other.gameObject);
             }
 
-			Die();
+            life--;
+            if(life <= 0)
+            {
+                Die();
+            }
 		}
 	}
 
