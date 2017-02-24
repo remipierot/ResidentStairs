@@ -116,8 +116,9 @@ public class PlayerController : MonoBehaviour {
                 {
                     if(other.CompareTag("Enemy"))
                     {
-                        other.GetComponent<EnemyScript>().Die();
+                        if (other.GetComponent<EnemyScript>() != null) other.GetComponent<EnemyScript>().Die();
                     }
+
                     if(other.CompareTag("MiniTorus"))
                     {
                         Destroy(other.gameObject);

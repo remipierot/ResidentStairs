@@ -28,9 +28,10 @@ public class TorusBehaviour : MonoBehaviour {
             if (other.CompareTag("Shot"))
             {
                 Destroy(other.gameObject);
+                Die();
             }
 
-            Die();
+            Destroy(this.gameObject);
         }
     }
 
@@ -48,10 +49,6 @@ public class TorusBehaviour : MonoBehaviour {
             newPos.y = center.y + 4.0f * parametricValues.y;
             go = Instantiate(miniTorus, newPos, m_transform.rotation);
             go.GetComponent<MiniTorusBehaviour>().setDirection((newPos - center));
-
-            // SPIRALE
         }
-
-        Destroy(this.gameObject);
     }
 }
