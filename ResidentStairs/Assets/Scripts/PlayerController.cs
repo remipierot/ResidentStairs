@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Transform shotSpawnSat2;
 
     [SerializeField] private Material myMat;
+    [SerializeField] private Material hitboxMat;
 
     [SerializeField] private GameObject boss;
 
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private int numberOfShots;
     [SerializeField] private int numberOfSatelittes;
     [SerializeField] private int numberOfBombs;
-    [SerializeField] private bool barrierActive;
+    [SerializeField] public bool barrierActive;
 
     public Boundary boundary;
     [SerializeField] private GameObject myMesh;
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
+        hitboxMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
     }
 
 
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour {
                         {
                             barrierActive = true;
                             myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                            hitboxMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
                         }
                         break;
                     case BonusBehaviour.BonusType.SAT:
@@ -111,8 +114,13 @@ public class PlayerController : MonoBehaviour {
             {
                 if (barrierActive)
                 {
+                    if(other.CompareTag("Enemy"))
+                    {
+                        other.GetComponent<EnemyScript>().Die();
+                    }
                     barrierActive = false;
                     myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
+                    hitboxMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                 }
                 else
                 {

@@ -14,9 +14,7 @@ public class EnemyScript : MonoBehaviour {
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
 	public GameObject BonusCarried;
-
-    public AudioSource DeathSound;
-
+    
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
 	public GameObject Outline;
@@ -47,18 +45,21 @@ public class EnemyScript : MonoBehaviour {
 	{
 		bool canBeKilled = (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
 
-		if (canBeKilled && (other.CompareTag("Shot") || other.CompareTag("Player")))
+		if ((other.CompareTag("Shot") || other.CompareTag("Player")))
 		{
             if(other.CompareTag("Shot"))
             {
                 Destroy(other.gameObject);
             }
 
-            life--;
-            m_HitParticleSystem.Emit(30);
-            if (life <= 0)
+            if(canBeKilled && transform.position.z < 28)
             {
-                Die();
+                life--;
+                m_HitParticleSystem.Emit(30);
+                if (life <= 0)
+                {
+                    Die();
+                }
             }
 		}
 	}
@@ -103,7 +104,6 @@ public class EnemyScript : MonoBehaviour {
 		_Collider1.enabled = false;
 		Outline.SetActive(false);
 		HitParticles.hit = true;
-        DeathSound.Play();
 
 
         if (BonusCarried != null)
