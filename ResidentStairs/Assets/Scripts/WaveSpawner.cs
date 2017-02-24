@@ -8,7 +8,6 @@ public class WaveSpawner : MonoBehaviour {
 	public Vector3 SpawnRange;
 	public int MaxEnemyPerWave;
 	public int MinEnemyPerWave;
-	public float TimeBetweenEnemySpawn;
 	public float TimeBeforeFirstWave;
 	public float TimeBetweenWaves;
     public float TimeBeforeBoss;
@@ -101,13 +100,6 @@ public class WaveSpawner : MonoBehaviour {
 							(waveType == WaveType.QUARTER && (i < enemyCount / 4.0f || (i >= 2.0f * enemyCount / 4.0f && i < 3.0f * enemyCount / 4.0f)));
 
 						enemyScript.SetColor(enemyIsBlack);
-
-						if(Bonuses.HasToPopABonus())
-						{
-							enemyScript.BonusCarried = Bonuses.GetNextBonus();
-						}
-
-						//yield return new WaitForSeconds(TimeBetweenEnemySpawn);
 					}
 				}
 			}

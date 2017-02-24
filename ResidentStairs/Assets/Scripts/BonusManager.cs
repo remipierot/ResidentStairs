@@ -64,14 +64,15 @@ public class BonusManager : MonoBehaviour {
 
 	public GameObject GetNextBonus()
 	{
-		GameObject Bonus = NextBonus;
+		return NextBonus;
+	}
 
-		if(HasToPopABonus())
+	public void EmptyNextBonus()
+	{
+		if (HasToPopABonus())
 		{
 			LastSpawnTime = Time.realtimeSinceStartup;
 			NextBonus = null;
 		}
-
-		return Bonus;
 	}
 }
