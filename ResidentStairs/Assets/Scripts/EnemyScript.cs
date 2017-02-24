@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EnemyScript : MonoBehaviour {
 
+
 	private Rigidbody _Body;
 	private BoxCollider _Collider0;
 	private CapsuleCollider _Collider1;
@@ -13,6 +14,8 @@ public class EnemyScript : MonoBehaviour {
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
 	public GameObject BonusCarried;
+
+    public AudioSource DeathSound;
 
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
@@ -90,8 +93,10 @@ public class EnemyScript : MonoBehaviour {
 		_Collider1.enabled = false;
 		Outline.SetActive(false);
 		HitParticles.hit = true;
+        DeathSound.Play();
 
-		if(BonusCarried != null)
+
+        if (BonusCarried != null)
 		{
             if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
                 Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));
