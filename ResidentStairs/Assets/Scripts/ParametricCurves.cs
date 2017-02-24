@@ -58,24 +58,12 @@ public class ParametricCurves {
 		return p;
 	}
 
-	public static Vector2 Plus(float t)
+	public static Vector2 Stars(float k, float t)
 	{
 		Vector2 p = Vector2.zero;
-		float angle = t * 2 * Mathf.PI;
 
-		p.x = 0;
-		p.y = 0;
-
-		return p;
-	}
-
-	public static Vector2 Arc(float t)
-	{
-		Vector2 p = Vector2.zero;
-		float angle = t * 2 * Mathf.PI;
-
-		p.x = 0;
-		p.y = 0;
+		p.x = (1.0f / k) * (k - 1) * Mathf.Cos(t) + (1.0f / k) * Mathf.Cos(t * (k - 1));
+		p.y = (1.0f / k) * (k - 1) * Mathf.Sin(t) - (1.0f / k) * Mathf.Sin(t * (k - 1));
 
 		return p;
 	}
