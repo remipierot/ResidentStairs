@@ -1,6 +1,16 @@
 ﻿Shader "Custom/VoronoiSpiral" 
 {
-	SubShader
+	Properties
+	{
+		_MinResolution("Minimum Resolution", Range(0,10)) = 1.0
+		_MaxResolution("Maximum Resolution", Range(0,10)) = 7.0
+		_MinThickness("Minimum Thickness", Range(0,0.5)) = 0.01
+		_MaxThickness("Maximum Thickness", Range(0,0.5)) = 0.03
+		_ResolutionSpeed("Speed of Resolution variation", Range(0,10)) = 0.1
+		_ThicknessSpeed("Speed of Thickness variation", Range(0, 10)) = 1.0
+	}
+
+		SubShader
 	{
 		Pass
 		{
@@ -10,12 +20,19 @@
 
 			#include "UnityCG.cginc"
 
+			float _MinResolution;
+			float _MaxResolution;
+			float _MinThickness;
+			float _MaxThickness;
+			float _ResolutionSpeed;
+			float _ThicknessSpeed;
+
 			float2 hash(float2 p)
 			{
 				return frac(sin(float2(p.x * p.y, p.x + p.y)) * float2(234342.1459123, 373445.3490423));
 			}
 
-			float4 voronoi(in float2 x)
+			float4 voronoi(float2 x)
 			{
 				float2 n = floor(x);
 				float2 f = frac(x);
@@ -68,21 +85,10 @@
 			{
 				float4 color = float4(0, 0, 0, 0);
 
-				float2 resolution = 7.0f * i.uv;
+				float2 centeredUV = i.uv - float2(0.5f, 0.5f);
+				float2 resolution = ((abs(sin(_Time.y * _ResolutionSpeed)) * (_MaxResolution - _MinResolution)) + _MinResolution) * centeredUV;
 				float4 v = voronoi(resolution);
-
-				/*
-				float2 q = v.yz;
-				//float a = _Time.y + atan2(q.x, sign(v.w - 1.0) * q.y);
-				float l = length(q * 5.0 / (sqrt(v.x))); //+ 0.319 * a;
-				float m = fmod(l, 2.0);
-				float w = min(fwidth(fmod(l + 1.5, 2.0)), fwidth(fmod(l + 0.5, 2.0))) / 2.0;
-				float o = (1.0 - smoothstep(1.85 - w, 1.85 + w, m)) * smoothstep(1.15 - w, 1.15 + w, m);
-				o = lerp(0.0, o, smoothstep(0.04, 0.07, v.x));
-				o = clamp(o, 0.3f, 0.7f);
-				*/
-
-				float c = (v.x <= 0.01f * (2.0f * abs(sin(_Time.y)) + 1.0f)) ? 1.0f : 0.0f;
+				float c = (v.x <= ((abs(sin(_Time.y * _ThicknessSpeed)) * (_MaxThickness - _MinThickness)) + _MinThickness)) ? 1.0f : 0.0f;
 				color = float4(c, c, c, 1);
 
 				return color;
