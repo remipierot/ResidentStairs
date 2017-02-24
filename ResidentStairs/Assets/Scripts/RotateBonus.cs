@@ -6,7 +6,10 @@ public class RotateBonus : MonoBehaviour
 {
 
     Transform m_transform;
-    public float rotationDirection = 1f;
+    public float rotationDirectionX = 0f;
+    public float rotationDirectionY = 1f;
+    public float rotationDirectionZ = 0f;
+
 
     // Use this for initialization
     void Start()
@@ -17,6 +20,6 @@ public class RotateBonus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_transform.Rotate(new Vector3(0.0f, rotationDirection * 90f * Time.deltaTime, 0.0f));
+        m_transform.Rotate(new Vector3(rotationDirectionX * 90f * Time.deltaTime, rotationDirectionY * 90f * Time.deltaTime, rotationDirectionZ * 90f * Time.deltaTime));
     }
 }
