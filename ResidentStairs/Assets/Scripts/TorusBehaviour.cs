@@ -68,5 +68,17 @@ public class TorusBehaviour : MonoBehaviour {
 			go = Instantiate(miniTorus, newPos, m_transform.rotation);
 			go.GetComponent<MiniTorusBehaviour>().setDirection((newPos - center));
 		}
+
+		BonusManager bonusManager = FindObjectOfType<BonusManager>();
+		if (bonusManager.HasToPopABonus())
+		{
+			GameObject bonus = bonusManager.GetNextBonus();
+			bonusManager.EmptyNextBonus();
+
+			if (bonus.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
+				Instantiate(bonus, transform.position, Quaternion.Euler(90.0f, 0.0f, 0.0f));
+			else
+				Instantiate(bonus, transform.position, Quaternion.identity);
+		}
 	}
 }
