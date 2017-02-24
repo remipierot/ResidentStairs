@@ -23,7 +23,9 @@ public class EnemyScript : MonoBehaviour {
     public bool IsAlive = true;
 	public BossHitParticle HitParticles;
 
-	private bool IsBlack = false;
+    public ParticleSystem m_HitParticleSystem;
+
+    private bool IsBlack = false;
     public float maxLife = 10;
     float life;
 
@@ -53,7 +55,8 @@ public class EnemyScript : MonoBehaviour {
             }
 
             life--;
-            if(life <= 0)
+            m_HitParticleSystem.Emit(30);
+            if (life <= 0)
             {
                 Die();
             }

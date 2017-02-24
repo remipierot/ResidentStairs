@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour {
                         if (!barrierActive)
                         {
                             barrierActive = true;
-                            // myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
+                            myMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                         }
                         break;
                     case BonusBehaviour.BonusType.SAT:
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour {
                 if (barrierActive)
                 {
                     barrierActive = false;
-                    // myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
+                    myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
                 }
                 else
                 {

@@ -88,10 +88,10 @@ Shader "CloverSwatch/BinstonBarrier"
 			{
 				float screenDepth = DecodeFloatRG(tex2D(_CameraDepthNormalsTexture, i.screenuv).zw);
 				float diff = screenDepth - i.depth;
-				float intersect = 0;
+				float intersect = 0.3f;
 				
-				if (diff > 0)
-					intersect = 1 - smoothstep(0, _ProjectionParams.w * 0.5, diff);
+				// if (diff > 0)
+					// intersect = 1 - smoothstep(0, _ProjectionParams.w * 0.5, 1.0f);
 
 				float rim = 0.2f; //  (1 - abs(dot(i.normal, normalize(i.viewDir))) * 2) / 2.0f;
 				float northPole = 0; // (i.objectPos.y - 0.45) * 10;
