@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviour {
                 if (barrierActive)
                 {
                     nextHit = Time.time + hitCD;
+                    Debug.Log("BARRIERE");
+                    barrierActive = false;
 
                     if (other.CompareTag("Enemy"))
                     {
@@ -132,9 +134,6 @@ public class PlayerController : MonoBehaviour {
                         Destroy(other.gameObject);
                     }
 
-                    barrierActive = false;
-
-                    
                     myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
                     hitboxMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
                 }
