@@ -9,7 +9,7 @@ public class DestroyedAnim : MonoBehaviour {
 	public bool state = false;
 
 	float disp = 0.0f;
-	float dispMax = 100000.0f;
+	float dispMax = 20000.0f;
 
 	public void SetMaterial(Material m)
 	{
