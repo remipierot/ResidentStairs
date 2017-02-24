@@ -82,7 +82,7 @@
 				o = clamp(o, 0.3f, 0.7f);
 				*/
 
-				float c = (v.x <= 0.01f) ? 0.0f : 1.0f;
+				float c = (v.x <= 0.02f) ? 1.0f : 0.0f;
 				color = float4(c, c, c, 1);
 
 				return color;
