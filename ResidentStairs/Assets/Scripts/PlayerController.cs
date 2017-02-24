@@ -118,6 +118,11 @@ public class PlayerController : MonoBehaviour {
                     {
                         other.GetComponent<EnemyScript>().Die();
                     }
+                    if(other.CompareTag("MiniTorus"))
+                    {
+                        Destroy(other.gameObject);
+                    }
+
                     barrierActive = false;
                     myMat.SetColor("_Color", new Color(1.0f, 1.0f, 1.0f, 1.0f));
                     hitboxMat.SetColor("_Color", new Color(0.0f, 0.0f, 0.0f, 1.0f));
@@ -303,6 +308,11 @@ public class PlayerController : MonoBehaviour {
                     {
                         if(enemy.GetComponent<EnemyScript>() != null) enemy.GetComponent<EnemyScript>().Die();
                         if (enemy.GetComponent<TorusBehaviour>() != null) enemy.GetComponent<TorusBehaviour>().Die();
+                    }
+
+                    foreach(GameObject minTor in GameObject.FindGameObjectsWithTag("MiniTorus"))
+                    {
+                        Destroy(minTor);
                     }
 
                     boss.GetComponent<BossBehaviour>().takeHit(bombDamage);
