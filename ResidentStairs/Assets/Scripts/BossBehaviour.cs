@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class BossBehaviour : MonoBehaviour {
 
     public int maxLife = 100;
-    public int life = 100;
+    int life;
 
     public Transform m_transform;
     public GameObject m_hitParticleSystem;
@@ -29,6 +29,7 @@ public class BossBehaviour : MonoBehaviour {
 	void Start () {
         m_transform = GetComponent<Transform>();
         arriving = true;
+        life = maxLife;
     }
 	
 	// Update is called once per frame
