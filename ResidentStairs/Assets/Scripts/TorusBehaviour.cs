@@ -38,12 +38,15 @@ public class TorusBehaviour : MonoBehaviour {
     {
         Vector3 center = m_transform.position;
         Vector3 newPos = center;
+		Vector2 parametricValues;
+		GameObject go;
 
-        for (int i = 0; i < nbMinTorus; i++)
+		for (int i = 0; i < nbMinTorus; i++)
         {
-            newPos.z = center.z + 4.0f * Mathf.Cos(((float)i / nbMinTorus) * Mathf.PI * 2.0f);
-            newPos.y = center.y + 4.0f * Mathf.Sin(((float)i / nbMinTorus) * Mathf.PI * 2.0f);
-            GameObject go = (GameObject)Instantiate(miniTorus, newPos, m_transform.rotation);
+			parametricValues = ParametricCurves.Circle((float)i / nbMinTorus);
+            newPos.z = center.z + 4.0f * parametricValues.x;
+            newPos.y = center.y + 4.0f * parametricValues.y;
+            go = Instantiate(miniTorus, newPos, m_transform.rotation);
             go.GetComponent<MiniTorusBehaviour>().setDirection((newPos - center));
 
             // SPIRALE
