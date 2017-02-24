@@ -27,6 +27,8 @@ public class EnemyScript : MonoBehaviour {
     public float maxLife = 10;
     float life;
 
+    public Animator anim;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -39,7 +41,8 @@ public class EnemyScript : MonoBehaviour {
 	private void Update()
 	{
 		_Body.AddForce(-transform.up * Speed);
-	}
+        
+    }
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -61,7 +64,11 @@ public class EnemyScript : MonoBehaviour {
                     Die();
                 }
             }
-		}
+            else
+            {
+                anim.SetTrigger("animStart");
+            }
+        }
 	}
 
 	public void SetColor(bool black)
