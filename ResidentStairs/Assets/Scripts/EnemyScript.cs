@@ -112,9 +112,12 @@ public class EnemyScript : MonoBehaviour {
 		Outline.SetActive(false);
 		HitParticles.hit = true;
 
-
-        if (BonusCarried != null)
+		BonusManager bonusManager = FindObjectOfType<BonusManager>();
+        if (bonusManager.HasToPopABonus())
 		{
+			BonusCarried = bonusManager.GetNextBonus();
+			bonusManager.EmptyNextBonus();
+
             if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
                 Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));
             else
