@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EnemyScript : MonoBehaviour {
 
+
 	private Rigidbody _Body;
 	private BoxCollider _Collider0;
 	private CapsuleCollider _Collider1;
@@ -13,14 +14,18 @@ public class EnemyScript : MonoBehaviour {
 	public DestroyedAnim KillScript;
 	public Material DyingMaterial;
 	public GameObject BonusCarried;
-
+    
 	public Material BlackMaterial;
 	public Material WhiteMaterial;
 	public GameObject Outline;
     public bool IsAlive = true;
 	public BossHitParticle HitParticles;
 
-	private bool IsBlack = false;
+    public ParticleSystem m_HitParticleSystem;
+
+    private bool IsBlack = false;
+    public float maxLife = 10;
+    float life;
 
 	// Use this for initialization
 	void Start ()
@@ -28,7 +33,8 @@ public class EnemyScript : MonoBehaviour {
 		_Body = GetComponent<Rigidbody>();
 		_Collider0 = GetComponent<BoxCollider>();
 		_Collider1 = GetComponent<CapsuleCollider>();
-	}
+        life = maxLife;
+    }
 
 	private void Update()
 	{
@@ -39,14 +45,22 @@ public class EnemyScript : MonoBehaviour {
 	{
 		bool canBeKilled = (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
 
-		if (canBeKilled && (other.CompareTag("Shot") || other.CompareTag("Player")))
+		if ((other.CompareTag("Shot") || other.CompareTag("Player")))
 		{
             if(other.CompareTag("Shot"))
             {
                 Destroy(other.gameObject);
             }
 
-			Die();
+            if(canBeKilled && transform.position.z < 28)
+            {
+                life--;
+                m_HitParticleSystem.Emit(30);
+                if (life <= 0)
+                {
+                    Die();
+                }
+            }
 		}
 	}
 
@@ -91,7 +105,8 @@ public class EnemyScript : MonoBehaviour {
 		Outline.SetActive(false);
 		HitParticles.hit = true;
 
-		if(BonusCarried != null)
+
+        if (BonusCarried != null)
 		{
             if(BonusCarried.GetComponent<BonusBehaviour>().bonusType == BonusBehaviour.BonusType.WEAPON)
                 Instantiate(BonusCarried, transform.position, Quaternion.Euler(90.0f,0.0f,0.0f));

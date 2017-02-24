@@ -9,11 +9,17 @@ public class GameManagerBehavior : MonoBehaviour {
     public bool switchColor = false;
     [SerializeField] private float switchCooldown = 0.5f;
     private float nextSwitch = 0.0f;
-
+    public GameObject background;
     public GameObject cam;
 
 	// Update is called once per frame
 	void Update () {
+
+        if(Input.GetButtonUp("Fire5"))
+        {
+            background.SetActive(!background.activeInHierarchy);
+        }
+
         if (Input.GetButtonUp("Fire3") && Time.time > nextSwitch)
         {
             switchColor = !switchColor;
