@@ -68,10 +68,11 @@
 			{
 				float4 color = float4(0, 0, 0, 0);
 
-				float2 b = 6.0 * i.uv;
-				float4 v = voronoi(b);
-				float2 q = v.yz;
+				float2 resolution = 10.0f * i.uv;
+				float4 v = voronoi(resolution);
 
+				/*
+				float2 q = v.yz;
 				//float a = _Time.y + atan2(q.x, sign(v.w - 1.0) * q.y);
 				float l = length(q * 5.0 / (sqrt(v.x))); //+ 0.319 * a;
 				float m = fmod(l, 2.0);
@@ -79,8 +80,10 @@
 				float o = (1.0 - smoothstep(1.85 - w, 1.85 + w, m)) * smoothstep(1.15 - w, 1.15 + w, m);
 				o = lerp(0.0, o, smoothstep(0.04, 0.07, v.x));
 				o = clamp(o, 0.3f, 0.7f);
+				*/
 
-				color = float4(o, o, o, 1);
+				float c = (v.x <= 0.01f) ? 0.0f : 1.0f;
+				color = float4(c, c, c, 1);
 
 				return color;
 			}
