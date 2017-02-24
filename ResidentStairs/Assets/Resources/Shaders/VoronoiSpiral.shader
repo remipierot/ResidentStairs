@@ -68,7 +68,7 @@
 			{
 				float4 color = float4(0, 0, 0, 0);
 
-				float2 resolution = 10.0f * i.uv;
+				float2 resolution = 7.0f * i.uv;
 				float4 v = voronoi(resolution);
 
 				/*
@@ -82,7 +82,7 @@
 				o = clamp(o, 0.3f, 0.7f);
 				*/
 
-				float c = (v.x <= 0.02f) ? 1.0f : 0.0f;
+				float c = (v.x <= 0.01f * (2.0f * abs(sin(_Time.y)) + 1.0f)) ? 1.0f : 0.0f;
 				color = float4(c, c, c, 1);
 
 				return color;
