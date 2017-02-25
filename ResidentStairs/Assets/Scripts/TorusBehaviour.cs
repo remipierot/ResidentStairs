@@ -9,6 +9,7 @@ public class TorusBehaviour : MonoBehaviour {
 	public float speed;
 	public float yDirection;
 	public float nbMinTorus;
+	private bool alive = true;
 
 	// Use this for initialization
 	void Start () {
@@ -28,7 +29,9 @@ public class TorusBehaviour : MonoBehaviour {
 			if (other.CompareTag("Shot"))
 			{
 				Destroy(other.gameObject);
-				Die();
+
+				if(alive)
+					Die();
 			}
 
 			Destroy(this.gameObject);
@@ -37,6 +40,7 @@ public class TorusBehaviour : MonoBehaviour {
 
 	public void Die()
 	{
+		alive = false;
 		Vector3 center = m_transform.position;
 		Vector3 newPos = center;
 		Vector2 parametricValues;
@@ -45,33 +49,31 @@ public class TorusBehaviour : MonoBehaviour {
 
 		for (int i = 0; i < nbMinTorus; i++)
 		{
-			/*
 			switch (r)
 			{
 				case 0:
-					parametricValues = ParametricCurves.Stars(1.6f, 32.0f * (float)i / nbMinTorus);
-					break;
-				case 1:
-					parametricValues = ParametricCurves.Stars(1.5f, 12.0f * (float)i / nbMinTorus);
-					break;
-				case 2:
-					parametricValues = ParametricCurves.Stars(0.5f, 12.0f * (float)i / nbMinTorus);
-					parametricValues.x = (parametricValues.x + 1.0f) / 2.0f;
-					parametricValues.y = parametricValues.y / 2.6f;
-					break;
-				default:
 					parametricValues = ParametricCurves.Circle((float)i / nbMinTorus);
 					break;
+				case 1:
+					parametricValues = ParametricCurves.Plus((float)i / nbMinTorus);
+					break;
+				case 2:
+					parametricValues = ParametricCurves.Square((float)i / nbMinTorus);
+					break;
+				default:
+					parametricValues = ParametricCurves.Triangle((float)i / nbMinTorus);
+					break;
 			}
-			*/
-
-			//For now, until better pattern found
-			parametricValues = ParametricCurves.Circle((float)i / nbMinTorus);
 
 			newPos.z = center.z + 4.0f * parametricValues.x;
 			newPos.y = center.y + 4.0f * parametricValues.y;
 			go = Instantiate(miniTorus, newPos, m_transform.rotation);
-			go.GetComponent<MiniTorusBehaviour>().setDirection((newPos - center));
+
+			if((newPos - center).Equals(Vector3.zero))
+				go.GetComponent<MiniTorusBehaviour>().setDirection(new Vector3(0.0f, yDirection, speed));
+			else
+				go.GetComponent<MiniTorusBehaviour>().setDirection((newPos - center));
+				
 		}
 
 		BonusManager bonusManager = FindObjectOfType<BonusManager>();

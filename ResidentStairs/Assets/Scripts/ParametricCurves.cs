@@ -67,4 +67,40 @@ public class ParametricCurves {
 
 		return p;
 	}
+
+	public static Vector2 Plus(float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = (t < 0.5f) ? 2.0f * t : 0.5f;
+		p.x = (p.x * 2.0f) - 1.0f;
+		p.y = (t < 0.5f) ? 0.5f : 2.0f * (t - 0.5f);
+		p.y = (p.y * 2.0f) - 1.0f;
+
+		return p;
+	}
+
+	public static Vector2 Square(float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = (t < 0.25f) ? 4.0f * t : (t < 0.5f) ? 1.0f : (t < 0.75f) ? 1.0f - (4.0f * (t - 0.5f)) : 0.0f;
+		p.x = (p.x * 2.0f) - 1.0f;
+		p.y = (t < 0.25f) ? 1.0f : (t < 0.5f) ? 1.0f - (4.0f * (t - 0.25f)) : (t < 0.75f) ? 0.0f : (4.0f * (t - 0.75f));
+		p.y = (p.y * 2.0f) - 1.0f;
+
+		return p;
+	}
+
+	public static Vector2 Triangle(float t)
+	{
+		Vector2 p = Vector2.zero;
+
+		p.x = (t < 0.33f) ? 3.0f * t : (t < 0.66f) ? 1.0f - (1.5f * (t - 0.33f)) : 0.5f - (1.5f * (t - 0.66f));
+		p.x = (p.x * 2.0f) - 1.0f;
+		p.y = (t < 0.33f) ? 0.0f : (t < 0.66f) ? 3.0f * (t - 0.33f) : 1.0f - (3.0f * (t - 0.66f));
+		p.y = (p.y * 2.0f) - 1.0f;
+
+		return p;
+	}
 }

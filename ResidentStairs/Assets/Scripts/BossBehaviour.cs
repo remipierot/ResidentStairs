@@ -71,16 +71,19 @@ public class BossBehaviour : MonoBehaviour {
 
     void shotTorus()
     {
-        Vector3 curPos = m_transform.position;
-        curPos.z -= 10.0f;
-        GameObject o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
-        curPos.y += 5.0f;
-        o.GetComponent<TorusBehaviour>().yDirection = 0.0f;
-        o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
-        curPos.y -= 10.0f;
-        o.GetComponent<TorusBehaviour>().yDirection = -2.0f;
-        o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
-        o.GetComponent<TorusBehaviour>().yDirection = 2.0f;
+		if (alive)
+		{
+			Vector3 curPos = m_transform.position;
+			curPos.z -= 10.0f;
+			GameObject o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+			curPos.y += 5.0f;
+			o.GetComponent<TorusBehaviour>().yDirection = 0.0f;
+			o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+			curPos.y -= 10.0f;
+			o.GetComponent<TorusBehaviour>().yDirection = -2.0f;
+			o = (GameObject)Instantiate(torus, curPos, Quaternion.Euler(new Vector3(0.0f, 90.0f, 0.0f)));
+			o.GetComponent<TorusBehaviour>().yDirection = 2.0f;
+		}
     }
 
     public void takeHit(int hit)
@@ -100,7 +103,17 @@ public class BossBehaviour : MonoBehaviour {
         m_deathParticle.Emit(10000);
         m_meshContainer.SetActive(false);
 
-        Invoke("ReloadTitleScene", 5.0f);
+		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+		{
+			Destroy(enemy);
+		}
+
+		foreach (GameObject minTor in GameObject.FindGameObjectsWithTag("MiniTorus"))
+		{
+			Destroy(minTor);
+		}
+
+		Invoke("ReloadTitleScene", 7.0f);
     }
 
     void ReloadTitleScene()

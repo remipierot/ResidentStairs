@@ -14,7 +14,7 @@ public class MiniTorusBehaviour : MonoBehaviour {
     void Start()
     {
         m_transform = GetComponent<Transform>();
-        Destroy(gameObject, 5.0f);
+        Destroy(gameObject, 7.0f);
     }
 
 	// Update is called once per frame
