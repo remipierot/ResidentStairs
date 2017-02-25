@@ -45,6 +45,7 @@ public class TorusBehaviour : MonoBehaviour {
 
 		for (int i = 0; i < nbMinTorus; i++)
 		{
+			/*
 			switch (r)
 			{
 				case 0:
@@ -62,6 +63,10 @@ public class TorusBehaviour : MonoBehaviour {
 					parametricValues = ParametricCurves.Circle((float)i / nbMinTorus);
 					break;
 			}
+			*/
+
+			//For now, until better pattern found
+			parametricValues = ParametricCurves.Circle((float)i / nbMinTorus);
 
 			newPos.z = center.z + 4.0f * parametricValues.x;
 			newPos.y = center.y + 4.0f * parametricValues.y;
