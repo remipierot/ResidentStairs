@@ -33,8 +33,6 @@ public class TorusBehaviour : MonoBehaviour {
 				if(alive)
 					Die();
 			}
-
-			Destroy(this.gameObject);
 		}
 	}
 
@@ -87,5 +85,7 @@ public class TorusBehaviour : MonoBehaviour {
 			else
 				Instantiate(bonus, transform.position, Quaternion.identity);
 		}
+
+		Destroy(this.gameObject);
 	}
 }

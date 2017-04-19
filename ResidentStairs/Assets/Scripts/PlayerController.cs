@@ -37,9 +37,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Material myMat;
     [SerializeField] private Material hitboxMat;
 
-    [SerializeField] private GameObject boss;
-
-
     [SerializeField] private int numberOfShots;
     [SerializeField] private int numberOfSatelittes;
     [SerializeField] private int numberOfBombs;
@@ -329,18 +326,27 @@ public class PlayerController : MonoBehaviour {
 
                     Camera.main.GetComponent<Screenshake>().startShaking(0.8f);
 
-                    foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-                    {
-                        if(enemy.GetComponent<EnemyScript>() != null) enemy.GetComponent<EnemyScript>().Die();
-                        if (enemy.GetComponent<TorusBehaviour>() != null) enemy.GetComponent<TorusBehaviour>().Die();
-                    }
+					foreach(EnemyScript enemy in FindObjectsOfType<EnemyScript>())
+					{
+						enemy.Die();
+					}
+
+					foreach(TorusBehaviour torus in FindObjectsOfType<TorusBehaviour>())
+					{
+						torus.Die();
+					}
 
                     foreach(GameObject minTor in GameObject.FindGameObjectsWithTag("MiniTorus"))
                     {
                         Destroy(minTor);
                     }
 
-                    boss.GetComponent<BossBehaviour>().takeHit(bombDamage);
+					BossBehaviour boss = FindObjectOfType<BossBehaviour>();
+
+					if(boss != null)
+					{
+						boss.takeHit(bombDamage);
+					}
                 }
             }
         }
