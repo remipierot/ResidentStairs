@@ -133,7 +133,7 @@ public class EnemyScript : MonoBehaviour {
             {
                 Invoke("LoadGame", 2.0f);
             }
-			if (gameObject.name == ("Enemy_CONTROLS"))
+			else if (gameObject.name == ("Enemy_CONTROLS"))
 			{
 				Invoke("LoadControls", 2.0f);
 			}
@@ -142,7 +142,11 @@ public class EnemyScript : MonoBehaviour {
                 Application.Quit();
             }
         }
-    }
+		else if (SceneManager.GetActiveScene().name == "Controls")
+		{
+			Invoke("LoadTitle", 2.0f);
+		}
+	}
 	
 	private bool _CanBeKilled()
 	{
@@ -157,5 +161,10 @@ public class EnemyScript : MonoBehaviour {
 	private void LoadControls()
 	{
 		SceneManager.LoadScene("Controls", LoadSceneMode.Single);
+	}
+
+	private void LoadTitle()
+	{
+		SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
 	}
 }

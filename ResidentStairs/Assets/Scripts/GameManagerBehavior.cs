@@ -12,8 +12,11 @@ public class GameManagerBehavior : MonoBehaviour {
     public GameObject background;
     public GameObject cam;
 
-	// Update is called once per frame
-	void Update () {
+    public Material BlackControls;
+    public Material WhiteControls;
+
+    // Update is called once per frame
+    void Update () {
 
         if(Input.GetButtonUp("Fire5"))
         {
@@ -27,8 +30,7 @@ public class GameManagerBehavior : MonoBehaviour {
 
             cam.GetComponent<BWImageEffect>().black = !cam.GetComponent<BWImageEffect>().black;
 
-			EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
-
+            EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
 			foreach(EnemyScript e in enemies)
 			{
                 if(e.IsAlive)
@@ -36,6 +38,7 @@ public class GameManagerBehavior : MonoBehaviour {
 				    e.SwapMaterial();
                 }
 			}
+
             if (SceneManager.GetActiveScene().name == "FinalScene")
 			{
 				BossHeartBehaviour bossBehaviour = FindObjectOfType<BossHeartBehaviour>();
@@ -45,6 +48,12 @@ public class GameManagerBehavior : MonoBehaviour {
 					bossBehaviour.SwapMaterial();
 				}
 			}
+            else if (SceneManager.GetActiveScene().name == "Controls")
+            {
+                var controlsRender = GameObject.Find("Controls").GetComponent<Renderer>();
+
+                controlsRender.sharedMaterial = cam.GetComponent<BWImageEffect>().black ? BlackControls : WhiteControls;
+            }
         }      
     }
 
