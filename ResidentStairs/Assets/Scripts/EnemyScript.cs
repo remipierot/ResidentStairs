@@ -133,7 +133,11 @@ public class EnemyScript : MonoBehaviour {
             {
                 Invoke("LoadGame", 2.0f);
             }
-            else if (gameObject.name == ("Enemy_QUIT"))
+			if (gameObject.name == ("Enemy_CONTROLS"))
+			{
+				Invoke("LoadControls", 2.0f);
+			}
+			else if (gameObject.name == ("Enemy_QUIT"))
             {
                 Application.Quit();
             }
@@ -149,4 +153,9 @@ public class EnemyScript : MonoBehaviour {
     {
         SceneManager.LoadScene("FinalScene", LoadSceneMode.Single);
     }
+
+	private void LoadControls()
+	{
+		SceneManager.LoadScene("Controls", LoadSceneMode.Single);
+	}
 }
