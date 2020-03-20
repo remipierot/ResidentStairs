@@ -1,4 +1,6 @@
-﻿Shader "Custom/TrucChelou01" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/TrucChelou01" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -44,7 +46,7 @@
 				v.vertex.xyz += sin(v.normal * _Displacement * _Time);
 
 				o.color = float4(v.normal, 1)*0.5 + 0.5;
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 
 				return o;
 

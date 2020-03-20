@@ -1,4 +1,6 @@
-﻿Shader "Custom/UnlitDestroyedAdv01" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/UnlitDestroyedAdv01" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -27,7 +29,7 @@
 			v2f vert(appdata_full v)
 			{
 				v2f o; 
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 				float3 norm = mul((float3x3)UNITY_MATRIX_IT_MV, v.normal);
 				float3 offset = TransformViewToProjection(norm.xyz);
 
