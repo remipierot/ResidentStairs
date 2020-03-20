@@ -46,8 +46,6 @@ public class EnemyScript : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		bool canBeKilled = (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
-
 		if ((other.CompareTag("Shot") || other.CompareTag("Player")))
 		{
             if(other.CompareTag("Shot"))
@@ -55,7 +53,7 @@ public class EnemyScript : MonoBehaviour {
                 Destroy(other.gameObject);
             }
 
-            if(canBeKilled && transform.position.z < 28)
+            if(_CanBeKilled() && transform.position.z < 28)
             {
                 life--;
                 m_HitParticleSystem.Emit(30);
@@ -98,6 +96,8 @@ public class EnemyScript : MonoBehaviour {
 
 		render.material = outline;
 		outlineRender.material = ship;
+
+		outlineRender.enabled = !_CanBeKilled();
 	}
 
 	public void Die()
@@ -139,6 +139,11 @@ public class EnemyScript : MonoBehaviour {
             }
         }
     }
+	
+	private bool _CanBeKilled()
+	{
+		return (!FindObjectOfType<GameManagerBehavior>().switchColor && IsBlack) || (FindObjectOfType<GameManagerBehavior>().switchColor && !IsBlack);
+	}
 
     private void LoadGame()
     {
